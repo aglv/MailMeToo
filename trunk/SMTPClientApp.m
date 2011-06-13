@@ -1,14 +1,12 @@
 //
-//  main.m
-//  smtp
+//  SMTPClientApp.m
 //
 //  Created by Alessandro Volz on 08.06.11.
-//  Copyright 2011 OsiriX Team. All rights reserved.
+//  LGPL.
 //
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     return NSApplicationMain(argc,  (const char **) argv);
 }

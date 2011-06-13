@@ -1,8 +1,8 @@
 //
-//  GrowlSamplePrefs.m
-//  Display Plugins
+//  SMTPClientGrowlPrefs.mm
 //
-//  Copyright 2006-2009 The Growl Project. All rights reserved.
+//  Created by Alessandro Volz on 08.06.11.
+//  LGPL.
 //
 
 #import "SMTPClientGrowlPrefs.h"
