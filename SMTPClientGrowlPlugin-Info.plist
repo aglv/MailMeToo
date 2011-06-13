@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>SMTPClient</string>
+	<key>CFBundleIdentifier</key>
+	<string>ch.alessandrovolz.growl.view.smtpclient</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>SMTP Mail 1</string>
+	<key>CFBundlePackageType</key>
+	<string>DISP</string>
+	<key>CFBundleSignature</key>
+	<string>GRRR</string>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>GrowlPluginAuthor</key>
+	<string>Alessandro Volz</string>
+	<key>GrowlPluginDescription</key>
+	<string>A plugin that growls emails sent through a specified SMTP server.</string>
+	<key>NSPrincipalClass</key>
+	<string>SMTPClientGrowlDisplay</string>
+</dict>
+</plist>
