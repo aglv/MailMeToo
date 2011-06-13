@@ -1,9 +1,8 @@
 //
 //  SMTPClientTests.mm
-//  SMTPClient
 //
 //  Created by Alessandro Volz on 6/13/11.
-//  Copyright 2011 Ingroppalgrillo. All rights reserved.
+//  LGPL.
 //
 
 #import "SMTPClientTests.h"
