@@ -1,5 +1,3 @@
-#summary Documentation
-
 = Introduction =
 
 Much like the _MailMe_ plugin, _SMTP Mail_ brings notifications to your attention by sending an email with every notification it is set to process. 
