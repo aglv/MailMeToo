@@ -238,6 +238,7 @@ EHLO:					[self _writeLine:[@"EHLO " stringByAppendingString:[N2Shell hostname]]
 								context.status = StatusSTARTTLS;
 							} else if (_tlsMode == SMTPClientTLSModeSTARTTLSOrClose)
 								[NSException raise:NSGenericException format:@"Server doesn't support STARTTLS"];
+							else goto MAIL;
 						} else
 						if (self.username && self.password) {
 							if ([context.authModes containsObject:@"CRAM-MD5"]) {
@@ -411,11 +412,7 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 		if (l) {
 			NSString* line = [[NSString alloc] initWithCStringNoCopy:datap length:l freeWhenDone:NO];
 			
-			@try {
-				[self _connection:connection handleLine:line context:context];
-			} @catch (NSException* e) {
-				NSLog(@"%@", e.description);
-			}
+			[self _connection:connection handleLine:line context:context];
 			
 			[line release];
 		}

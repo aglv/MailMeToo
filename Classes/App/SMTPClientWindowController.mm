@@ -8,7 +8,7 @@
 #import "SMTPClientWindowController.h"
 #import "SMTPClientAppDelegate.h"
 #import "SMTPClient.h"
-#import <Nitrogen/N2Debug.h>
+#import "Nitrogen/N2Debug.h"
 
 
 @implementation SMTPClientWindowController

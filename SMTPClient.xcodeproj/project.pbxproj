@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* SMTPClientAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* SMTPClientAppDelegate.mm */; };
+		5910DC4813A7B36B009F7A62 /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
 		595CA53C13A1025900A24CB2 /* SMTPClientGrowlDisplay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53313A1025900A24CB2 /* SMTPClientGrowlDisplay.mm */; };
 		595CA53D13A1025900A24CB2 /* SMTPClientGrowlPrefs.mm in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53513A1025900A24CB2 /* SMTPClientGrowlPrefs.mm */; };
-		595CA54013A1030500A24CB2 /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
 		595CA78413A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595CA78213A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib */; };
 		59E0BD51139FB38800477835 /* SMTPClientWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BD50139FB38800477835 /* SMTPClientWindowController.mm */; };
 		59E0BD60139FB4EA00477835 /* EmailWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E0BD5E139FB4EA00477835 /* EmailWindow.xib */; };
@@ -30,47 +30,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		714CAF0413A6692600DAA5E5 /* PBXContainerItemProxy */ = {
+		5910DAA013A7A586009F7A62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Nitrogen */;
 			remoteInfo = Nitrogen;
 		};
-		71C4B66013A4A845008E5639 /* PBXContainerItemProxy */ = {
+		5910DAE613A7A926009F7A62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Nitrogen */;
+			remoteInfo = Nitrogen;
+		};
+		597C8E6F13A746C800AABAD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Nitrogen;
 		};
-		71C4B66213A4A845008E5639 /* PBXContainerItemProxy */ = {
+		597C8E7313A746C800AABAD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 591403A21105B88A00D6A504;
 			remoteInfo = "Unit Tests";
-		};
-		71C4B70713A4A85B008E5639 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 71C4B70413A4A85B008E5639;
-			remoteInfo = "Nitrogen copy";
-		};
-		71C4B71513A4A96F008E5639 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Nitrogen;
-		};
-		71C4B71713A4A97B008E5639 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 71C4B66B13A4A85B008E5639;
-			remoteInfo = "Nitrogen GC";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -121,8 +107,8 @@
 		29B97316FDCFA39411CA2CEA /* SMTPClientApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTPClientApp.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nitrogen.xcodeproj; path = "../../Development/osirix-trunk/nitrogen/Nitrogen.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		595CA48113A0FF2C00A24CB2 /* SMTPClient.growlView */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMTPClient.growlView; sourceTree = BUILT_PRODUCTS_DIR; };
+		595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nitrogen.xcodeproj; path = "../osirix-trunk/nitrogen/Nitrogen.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMTPMail.growlView; sourceTree = BUILT_PRODUCTS_DIR; };
 		595CA48E13A0FF9900A24CB2 /* SMTPClientGrowlPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientGrowlPlugin-Info.plist"; sourceTree = "<group>"; };
 		595CA52113A1025900A24CB2 /* GrowlDisplayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDisplayPlugin.h; sourceTree = "<group>"; };
 		595CA53213A1025900A24CB2 /* SMTPClientGrowlDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientGrowlDisplay.h; path = Classes/GrowlPlugin/SMTPClientGrowlDisplay.h; sourceTree = "<group>"; };
@@ -142,9 +128,9 @@
 		71E1B3DE13A663370083323C /* SMTPClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SMTPClientTests-Info.plist"; sourceTree = "<group>"; };
 		71E1B3E813A663E40083323C /* SMTPClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientTests.h; path = Classes/Tests/SMTPClientTests.h; sourceTree = "<group>"; };
 		71E1B3E913A663E40083323C /* SMTPClientTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientTests.mm; path = Classes/Tests/SMTPClientTests.mm; sourceTree = "<group>"; };
-		71E1B41213A667DD0083323C /* SMTPClient Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SMTPClient Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71E1B41213A667DD0083323C /* SMTPClient.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMTPClient.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* SMTPClientApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientApp-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* smtp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smtp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* SMTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,9 +192,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* smtp.app */,
-				595CA48113A0FF2C00A24CB2 /* SMTPClient.growlView */,
-				71E1B41213A667DD0083323C /* SMTPClient Tests.octest */,
+				8D1107320486CEB800E47090 /* SMTPClient.app */,
+				595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */,
+				71E1B41213A667DD0083323C /* SMTPClient.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -328,22 +314,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		597C8E6A13A746C800AABAD6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				597C8E7013A746C800AABAD6 /* Nitrogen.framework */,
+				597C8E7413A746C800AABAD6 /* Unit Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		71C4B65613A4A821008E5639 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
 				595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */,
 			);
 			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		71C4B65C13A4A845008E5639 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				71C4B66113A4A845008E5639 /* Nitrogen.framework */,
-				71C4B70813A4A85B008E5639 /* Nitrogen.framework */,
-				71C4B66313A4A845008E5639 /* Unit Tests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		71E1B3E713A663B30083323C /* Tests */ = {
@@ -381,18 +366,18 @@
 			buildPhases = (
 				595CA47D13A0FF2C00A24CB2 /* Resources */,
 				595CA62C13A115C700A24CB2 /* Copy Frameworks */,
-				59EAC6E813A25BB70092BC07 /* Nitrogen B */,
+				59EAC6E813A25BB70092BC07 /* Clean Nitrogen Headers */,
 				595CA47E13A0FF2C00A24CB2 /* Sources */,
 				595CA47F13A0FF2C00A24CB2 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				71C4B71813A4A97B008E5639 /* PBXTargetDependency */,
+				5910DAE713A7A926009F7A62 /* PBXTargetDependency */,
 			);
 			name = "SMTPClient Growl Plugin";
 			productName = "SMTPClient Growl Plugin";
-			productReference = 595CA48113A0FF2C00A24CB2 /* SMTPClient.growlView */;
+			productReference = 595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */;
 			productType = "com.apple.product-type.bundle";
 		};
 		71E1B41113A667DD0083323C /* SMTPClient Tests */ = {
@@ -409,11 +394,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				714CAF0513A6692600DAA5E5 /* PBXTargetDependency */,
 			);
 			name = "SMTPClient Tests";
 			productName = "SMTPClient Tests";
-			productReference = 71E1B41213A667DD0083323C /* SMTPClient Tests.octest */;
+			productReference = 71E1B41213A667DD0083323C /* SMTPClient.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8D1107260486CEB800E47090 /* SMTPClient App */ = {
@@ -422,19 +406,19 @@
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				59E0BE43139FC21100477835 /* Copy Frameworks */,
-				59EAC6E513A25B990092BC07 /* Nitrogen A */,
+				59EAC6E513A25B990092BC07 /* Clean Nitrogen Headers */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				71C4B71613A4A96F008E5639 /* PBXTargetDependency */,
+				5910DAA113A7A586009F7A62 /* PBXTargetDependency */,
 			);
 			name = "SMTPClient App";
 			productInstallPath = "$(HOME)/Applications";
 			productName = smtp;
-			productReference = 8D1107320486CEB800E47090 /* smtp.app */;
+			productReference = 8D1107320486CEB800E47090 /* SMTPClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -456,7 +440,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 71C4B65C13A4A845008E5639 /* Products */;
+					ProductGroup = 597C8E6A13A746C800AABAD6 /* Products */;
 					ProjectRef = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 				},
 			);
@@ -470,25 +454,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		71C4B66113A4A845008E5639 /* Nitrogen.framework */ = {
+		597C8E7013A746C800AABAD6 /* Nitrogen.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Nitrogen.framework;
-			remoteRef = 71C4B66013A4A845008E5639 /* PBXContainerItemProxy */;
+			remoteRef = 597C8E6F13A746C800AABAD6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		71C4B66313A4A845008E5639 /* Unit Tests.octest */ = {
+		597C8E7413A746C800AABAD6 /* Unit Tests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Unit Tests.octest";
-			remoteRef = 71C4B66213A4A845008E5639 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		71C4B70813A4A85B008E5639 /* Nitrogen.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Nitrogen.framework;
-			remoteRef = 71C4B70713A4A85B008E5639 /* PBXContainerItemProxy */;
+			remoteRef = 597C8E7313A746C800AABAD6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -522,33 +499,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		59EAC6E513A25B990092BC07 /* Nitrogen A */ = {
+		59EAC6E513A25B990092BC07 /* Clean Nitrogen Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Nitrogen A";
+			name = "Clean Nitrogen Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nfind . -type d -maxdepth 1 -mindepth 1 | grep -v './A' | xargs rm -Rf\nrm Current\nln -s A Current\nrm -Rf ../Headers A/Headers";
+			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nrm -Rf ../Headers A/Headers\n";
 		};
-		59EAC6E813A25BB70092BC07 /* Nitrogen B */ = {
+		59EAC6E813A25BB70092BC07 /* Clean Nitrogen Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Nitrogen B";
+			name = "Clean Nitrogen Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nfind . -type d -maxdepth 1 -mindepth 1 | grep -v './B' | xargs rm -Rf\nrm Current\nln -s B Current\nrm -Rf ../Headers B/Headers";
+			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nrm -Rf ../Headers A/Headers\n";
 		};
 		714CAF0B13A6696D00DAA5E5 /* Nitrogen A */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -586,7 +563,7 @@
 			files = (
 				595CA53C13A1025900A24CB2 /* SMTPClientGrowlDisplay.mm in Sources */,
 				595CA53D13A1025900A24CB2 /* SMTPClientGrowlPrefs.mm in Sources */,
-				595CA54013A1030500A24CB2 /* SMTPClient.mm in Sources */,
+				5910DC4813A7B36B009F7A62 /* SMTPClient.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,20 +590,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		714CAF0513A6692600DAA5E5 /* PBXTargetDependency */ = {
+		5910DAA113A7A586009F7A62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Nitrogen;
-			targetProxy = 714CAF0413A6692600DAA5E5 /* PBXContainerItemProxy */;
+			targetProxy = 5910DAA013A7A586009F7A62 /* PBXContainerItemProxy */;
 		};
-		71C4B71613A4A96F008E5639 /* PBXTargetDependency */ = {
+		5910DAE713A7A926009F7A62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Nitrogen;
-			targetProxy = 71C4B71513A4A96F008E5639 /* PBXContainerItemProxy */;
-		};
-		71C4B71813A4A97B008E5639 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Nitrogen GC";
-			targetProxy = 71C4B71713A4A97B008E5639 /* PBXContainerItemProxy */;
+			targetProxy = 5910DAE613A7A926009F7A62 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -678,7 +650,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Development/osirix-trunk/nitrogen/build/Development\"",
+					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -803,7 +775,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Development/osirix-trunk/nitrogen/build/Development\"",
+					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
