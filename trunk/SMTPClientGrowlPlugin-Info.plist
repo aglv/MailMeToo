@@ -5,13 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>SMTPClient</string>
+	<string>SMTPMail</string>
 	<key>CFBundleIdentifier</key>
-	<string>ch.alessandrovolz.growl.view.smtpclient</string>
+	<string>ch.alessandrovolz.growl.view.smtpmail</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SMTP Mail 1</string>
+	<string>SMTP Mail</string>
 	<key>CFBundlePackageType</key>
 	<string>DISP</string>
 	<key>CFBundleSignature</key>

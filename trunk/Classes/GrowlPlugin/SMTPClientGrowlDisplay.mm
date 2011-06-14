@@ -11,6 +11,7 @@
 #import "SMTPClient.h"
 #import "Nitrogen/N2Debug.h"
 
+
 @implementation SMTPClientGrowlDisplay
 
 -(void)dealloc {
@@ -25,6 +26,8 @@
 }
 
 -(void)displayNotification:(GrowlApplicationNotification*)notification {
+	NSLog(@"[SMTPClientGrowlDisplay displayNotification:%@]", notification);
+	
 	@try {
 		NSString* subject = [[[self preferencePane] messageSubject] length]? [[self preferencePane] messageSubject] : @"Growl";
 		subject = [NSString stringWithFormat:@"[%@] %@: %@", subject, notification.applicationName, notification.title];
@@ -51,7 +54,7 @@
 		NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys: 
 								serverAddress, SMTPServerAddressKey,
 								[NSNumber numberWithInteger:[[self preferencePane] serverPort]], SMTPServerPortKey,
-								[NSNumber numberWithBool:[[self preferencePane] serverTlsMode]], SMTPServerTLSModeKey,
+								[NSNumber numberWithInteger:[[self preferencePane] serverTlsMode]], SMTPServerTLSModeKey,
 								[NSNumber numberWithBool:[[self preferencePane] serverAuthFlag]], SMTPServerAuthFlagKey,
 								serverAuthUsername, SMTPServerAuthUsernameKey,
 								serverAuthPassword, SMTPServerAuthPasswordKey,
@@ -73,7 +76,6 @@
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
 	@try {
 		[SMTPClient send:params];
-		NSLog(@"The message was successfully sent");
 	} @catch (NSException* e) {
 		N2LogExceptionWithStackTrace(e);
 	} @finally {

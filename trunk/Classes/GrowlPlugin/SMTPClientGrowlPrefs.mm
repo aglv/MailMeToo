@@ -9,8 +9,21 @@
 #import "GrowlDefinesInternal.h"
 #import "SMTPClient.h"
 
+#define REMOVE_GROWL_PREF_VALUE(key, domain) do {\
+	CFDictionaryRef staticPrefs = (CFDictionaryRef)CFPreferencesCopyAppValue((CFStringRef)domain, \
+	CFSTR("com.Growl.GrowlHelperApp")); \
+	CFMutableDictionaryRef prefs; \
+	if (staticPrefs == NULL) {\
+		prefs = CFDictionaryCreateMutable(NULL, 0, NULL, NULL); \
+	} else {\
+		prefs = CFDictionaryCreateMutableCopy(NULL, 0, staticPrefs); \
+		CFRelease(staticPrefs); \
+	}\
+	CFDictionaryRemoveValue(prefs, key); \
+	CFPreferencesSetAppValue((CFStringRef)domain, prefs, CFSTR("com.Growl.GrowlHelperApp")); \
+	CFRelease(prefs); } while(0)
 
-static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smtpclient";
+static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smtpmail";
 
 @interface SMTPClientGrowlPrefs ()
 
@@ -36,12 +49,21 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	NSMutableDictionary* options = [NSMutableDictionary dictionary];
 	[options setObject:[NSNumber numberWithBool:YES] forKey:NSAllowsEditingMultipleValuesSelectionBindingOption];
 	[options setObject:[NSNumber numberWithBool:YES] forKey:NSRaisesForNotApplicableKeysBindingOption];
-	[options setObject:[NSNumber numberWithInteger:(self.serverTlsMode == SMTPClientTLSModeTLS)? 465 : 25] forKey:NSNullPlaceholderBindingOption];
+	[options setObject:(self.serverTlsMode == SMTPClientTLSModeTLS ? @"465" : @"25") forKey:NSNullPlaceholderBindingOption];
 	[_serverPortField unbind:@"value"];
 	[_serverPortField bind:@"value" toObject:self withKeyPath:@"serverPort" options:options];
 }
 
 #pragma mark Accessors
+
+-(void)setNilValueForKey:(NSString*)key {
+	if ([key isEqualToString:@"serverPort"]) {
+		REMOVE_GROWL_PREF_VALUE(SMTPServerPortKey, DefaultsDomain);
+	} else {
+		[super setNilValueForKey:key];
+	}
+
+}
 
 -(NSString*)serverAddress {
 	NSString* value = nil;
@@ -49,7 +71,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setServerAddress:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPServerAddressKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPServerAddressKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPServerAddressKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
@@ -64,7 +87,7 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 }
 
 -(NSInteger)serverTlsMode {
-	NSInteger value = NO;
+	NSInteger value = SMTPClientTLSModeSTARTTLSIfPossible;
 	READ_GROWL_PREF_INT(SMTPServerTLSModeKey, DefaultsDomain, &value);
 	return value;
 }
@@ -90,7 +113,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setServerAuthUsername:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPServerAuthUsernameKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPServerAuthUsernameKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPServerAuthUsernameKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
@@ -100,7 +124,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setServerAuthPassword:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
@@ -110,7 +135,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setMessageFrom:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPFromKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPFromKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPFromKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
@@ -120,7 +146,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setMessageTo:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPToKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPToKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPToKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
@@ -130,7 +157,8 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.smt
 	return value;
 }
 -(void)setMessageSubject:(NSString*)value {
-	WRITE_GROWL_PREF_VALUE(SMTPSubjectKey, value, DefaultsDomain);
+	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPSubjectKey, value, DefaultsDomain);
+	else REMOVE_GROWL_PREF_VALUE(SMTPSubjectKey, DefaultsDomain);
 	UPDATE_GROWL_PREFS();
 }
 
