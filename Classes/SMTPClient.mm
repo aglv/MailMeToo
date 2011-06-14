@@ -200,7 +200,7 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(void)_connection:(N2Connection*)connection handleCode:(NSInteger)code withMessage:(NSString*)message separator:(unichar)separator context:(_SMTPSendMessageContext*)context {
-//	NSLog(@" HANDLE: [Status %d] Handling %d with %@", context.status, code, message);
+//	NSLog(@"HANDLE: [Status %d] Handling %d with %@", context.status, code, message);
 	
 	if (code >= 500)
 		[NSException raise:NSGenericException format:@"Error %d: %@", code, message];
@@ -324,7 +324,20 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 				case 250: {
 					[self _writeLine:@"DATA" to:connection];
 					context.status = StatusDATA;
-					
+					return;
+				}
+			}
+		} break;
+		case StatusDATA: {
+			switch (code) {
+				case 0: // disconnection
+				case 250:
+					[self _writeLine:@"QUIT" to:connection];
+					context.status = StatusQUIT;
+					if (code == 0)
+						[connection close];
+					return;
+				case 354:
 					if (context.fromDescription)
 						[self _writeLine:[NSString stringWithFormat:@"From: =?UTF-8?B?%@?= <%@>", [[context.fromDescription dataUsingEncoding:NSUTF8StringEncoding] base64], context.from] to:connection];
 					else [self _writeLine:[NSString stringWithFormat:@"From: %@", context.from] to:connection];
@@ -349,21 +362,7 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 					}
 					
 					[self _writeLine:@"." to:connection];
-					
-					return;
-				}
-			}
-		} break;
-		case StatusDATA: {
-			switch (code) {
-				case 0: // disconnection
-				case 250:
-					[self _writeLine:@"QUIT" to:connection];
-					context.status = StatusQUIT;
-					if (code == 0)
-						[connection close];
-					return;
-				case 354:
+
 					return;
 			}
 		} break;
@@ -398,6 +397,7 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 -(NSInteger)_connection:(N2Connection*)connection handleData:(NSData*)data context:(_SMTPSendMessageContext*)context {
 	if (!data) {
 		[self _connection:connection handleCode:0 withMessage:nil separator:0 context:context];
+//		NSLog(@"Closing :(");
 		return 0;
 	}
 	

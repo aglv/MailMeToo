@@ -34,14 +34,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Nitrogen */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Nitrogen;
 		};
 		5910DAE613A7A926009F7A62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Nitrogen */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Nitrogen;
 		};
 		597C8E6F13A746C800AABAD6 /* PBXContainerItemProxy */ = {
@@ -128,9 +128,9 @@
 		71E1B3DE13A663370083323C /* SMTPClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SMTPClientTests-Info.plist"; sourceTree = "<group>"; };
 		71E1B3E813A663E40083323C /* SMTPClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientTests.h; path = Classes/Tests/SMTPClientTests.h; sourceTree = "<group>"; };
 		71E1B3E913A663E40083323C /* SMTPClientTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientTests.mm; path = Classes/Tests/SMTPClientTests.mm; sourceTree = "<group>"; };
-		71E1B41213A667DD0083323C /* SMTPClient.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMTPClient.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		71E1B41213A667DD0083323C /* SMTPClient Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SMTPClient Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* SMTPClientApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientApp-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* SMTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* smtp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smtp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,9 +192,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* SMTPClient.app */,
+				8D1107320486CEB800E47090 /* smtp.app */,
 				595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */,
-				71E1B41213A667DD0083323C /* SMTPClient.octest */,
+				71E1B41213A667DD0083323C /* SMTPClient Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,7 +397,7 @@
 			);
 			name = "SMTPClient Tests";
 			productName = "SMTPClient Tests";
-			productReference = 71E1B41213A667DD0083323C /* SMTPClient.octest */;
+			productReference = 71E1B41213A667DD0083323C /* SMTPClient Tests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8D1107260486CEB800E47090 /* SMTPClient App */ = {
@@ -418,7 +418,7 @@
 			name = "SMTPClient App";
 			productInstallPath = "$(HOME)/Applications";
 			productName = smtp;
-			productReference = 8D1107320486CEB800E47090 /* SMTPClient.app */;
+			productReference = 8D1107320486CEB800E47090 /* smtp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -686,7 +686,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Projects/osirix-branch-CoreData/nitrogen/build/Development\"",
 					"\"$(SRCROOT)/../../Development/osirix-trunk/nitrogen/build/Development\"",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -701,7 +700,7 @@
 					dynamic_lookup,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SMTPClient;
+				PRODUCT_NAME = SMTPMail;
 				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = growlView;
 				ZERO_LINK = NO;

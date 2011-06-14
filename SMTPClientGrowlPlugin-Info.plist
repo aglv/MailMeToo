@@ -12,6 +12,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>SMTP Mail</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.1</string>
 	<key>CFBundlePackageType</key>
 	<string>DISP</string>
 	<key>CFBundleSignature</key>
@@ -23,7 +25,7 @@
 	<key>GrowlPluginAuthor</key>
 	<string>Alessandro Volz</string>
 	<key>GrowlPluginDescription</key>
-	<string>A plugin that growls emails sent through a specified SMTP server.</string>
+	<string>A plugin that growls emails, sent through a specified SMTP server.</string>
 	<key>NSPrincipalClass</key>
 	<string>SMTPClientGrowlDisplay</string>
 </dict>
