@@ -6,6 +6,8 @@ Much like the _MailMe_ plugin, _SMTP Mail_ brings notifications to your attentio
 
 The _SMTP Mail_ plugin was created to give the user more control on how the emails are sent: in _MailMe_ the user can only configure the destination email address, then _Mail.app_ is used to route the email to its destination. In _SMTP Mail_ users are allowed to provide an SMTP account's information like in any email client. Emails are sent through the specified server using the specified account information.
 
+[http://growl-mail-smtp.googlecode.com/svn/wiki/prefs.png]
+
 However, while _MailMe_ works with any account type supported by _Mail.app_, _SMTP Mail_ only supports SMTP servers.
 
 If you are not familiar with SMTP configuration, and if you don't have any particular reason not to use the _MailMe_ plugin, then better use _MailMe_ as a simpler solution. I built this plugin because I couldn't get _MailMe_ to work with _Mail.app_ and my employer's _Exchange_ server, and because I needed a clean Cocoa class to send emails through SMTP for another project.
