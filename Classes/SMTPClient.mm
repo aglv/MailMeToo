@@ -12,6 +12,7 @@
 #import "Nitrogen/N2Debug.h"
 #import "Nitrogen/NSString+N2.h"
 #import "Nitrogen/NSData+N2.h"
+#import <iconv.h>
 
 
 const NSString* const SMTPServerAddressKey = @"SMTPServerAddress";
@@ -58,6 +59,12 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 @property(retain) NSArray* authModes;
 @property BOOL canStartTLS;
 @property NSInteger rcptToCount;
+
+@end
+
+@interface NSString (UTF7)
+
+-(NSData*)UTF7Data;
 
 @end
 
@@ -202,9 +209,12 @@ enum SMTPClientContextSubstatuses {
 	return [[r1 md5] hex];
 }
 
--(void)_writeLine:(NSString*)line to:(N2Connection*)connection {
-	NSLog(@"<- %@", line);
-	[connection writeData:[[line stringByAppendingString:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+-(void)_writeLine:(id)line to:(N2Connection*)connection {
+//	NSLog(@"<- %@", line);
+	if ([line isKindOfClass:NSString.class])
+		line = [line dataUsingEncoding:NSUTF8StringEncoding];
+	[connection writeData:line];
+	[connection writeData:[NSData dataWithBytesNoCopy:(void*)"\r\n" length:2 freeWhenDone:NO]];
 }
 
 -(void)_connection:(N2Connection*)connection handleCode:(NSInteger)code withMessage:(NSString*)message separator:(unichar)separator context:(_SMTPSendMessageContext*)context {
@@ -367,21 +377,14 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 					[self _writeLine:[NSString stringWithFormat:@"To: %@", to] to:connection];
 					
 					[self _writeLine:[NSString stringWithFormat:@"Subject: =?UTF-8?B?%@?=", [[context.subject dataUsingEncoding:NSUTF8StringEncoding] base64]] to:connection];
-					[self _writeLine:@"Mime-Version: 1.0;" to:connection];
-					[self _writeLine:@"Content-Type: text/html; charset=\"UTF-8\";" to:connection];
-					[self _writeLine:@"Content-Transfer-Encoding: 7bit;" to:connection];
+					[self _writeLine:@"Mime-Version: 1.0" to:connection];
+					[self _writeLine:@"Content-Type: text/html; charset=\"UTF-7\"" to:connection];
+					[self _writeLine:@"Content-Transfer-Encoding: 7bit" to:connection];
 					
 					[self _writeLine:@"" to:connection];
 					
-					NSString* message = context.message;
-					message = [message stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-					message = [message stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
-					
-					for (NSString* line in [message componentsSeparatedByCharactersInSet:NSCharacterSet.newlineCharacterSet]) {
-						if (line.length > 0 && [line characterAtIndex:0] == '.')
-							line = [@"." stringByAppendingString:line];
-						[self _writeLine:line to:connection];
-					}
+					NSString* message = [context.message stringByReplacingOccurrencesOfString:@"\r\n." withString:@"\r\n.."];
+					[self _writeLine:[message UTF7Data] to:connection];
 					
 					[self _writeLine:@"." to:connection];
 
@@ -401,7 +404,7 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 }
 
 -(void)_connection:(N2Connection*)connection handleLine:(NSString*)line context:(_SMTPSendMessageContext*)context {
-	NSLog(@"-> %@", line);
+//	NSLog(@"-> %@", line);
 	
 	NSInteger code = 0;
 	NSString* message = nil;
@@ -479,6 +482,48 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 }
 
 @end
+
+@implementation NSString (UTF7)
+
+-(NSData*)UTF7Data {
+	static iconv_t iconv_descr = nil;
+	if (!iconv_descr) iconv_descr = iconv_open("UTF-7", "UTF-8");
+	if (iconv_descr == (iconv_t)-1) [NSException raise:NSGenericException format:@"iconv_open error %d", errno];
+	
+	NSMutableData* odata = [NSMutableData data];
+	
+	char* in_p = (char*)[self UTF8String];
+	size_t in_size = strlen(in_p);
+
+	iconv(iconv_descr, NULL, 0, NULL, 0); // reset iconv
+	
+	do {
+		char out_buff[1024];
+		char* out_p = out_buff;
+		size_t out_avail = sizeof(out_buff);
+		// do the transformation
+		iconv(iconv_descr, &in_p, &in_size, &out_p, &out_avail);
+		// copy the output buffer to odata
+		[odata appendBytes:out_buff length:(sizeof(out_buff)-out_avail)];
+	} while (in_size > 0);
+
+	return odata;
+}
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

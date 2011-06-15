@@ -22,6 +22,9 @@
 		714CAFB713A669DC00DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
 		714CAFB813A669DF00DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
 		714CAFB913A669E100DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
+		71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
+		71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
+		71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71E1B42513A6686D0083323C /* SMTPClientTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71E1B3E913A663E40083323C /* SMTPClientTests.mm */; };
 		71E1B42613A668750083323C /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -125,6 +128,7 @@
 		59E0BE4D139FC41D00477835 /* SMTPClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClient.mm; path = Classes/SMTPClient.mm; sourceTree = "<group>"; };
 		59EAC72213A25C480092BC07 /* GrowlDefinesInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDefinesInternal.h; sourceTree = "<group>"; };
 		714CAF6313A669D900DAA5E5 /* Nitrogen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nitrogen.framework; path = "../osirix-trunk/nitrogen/build/Development/Nitrogen.framework"; sourceTree = SOURCE_ROOT; };
+		71ACBCEF13A951AD004C8E22 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		71E1B3DE13A663370083323C /* SMTPClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SMTPClientTests-Info.plist"; sourceTree = "<group>"; };
 		71E1B3E813A663E40083323C /* SMTPClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientTests.h; path = Classes/Tests/SMTPClientTests.h; sourceTree = "<group>"; };
 		71E1B3E913A663E40083323C /* SMTPClientTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientTests.mm; path = Classes/Tests/SMTPClientTests.mm; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				714CAF6413A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
+				71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				714CAF6613A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
+				71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +162,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				714CAF6513A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
+				71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +241,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				71ACBCEF13A951AD004C8E22 /* libiconv.dylib */,
 				714CAF6313A669D900DAA5E5 /* Nitrogen.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
