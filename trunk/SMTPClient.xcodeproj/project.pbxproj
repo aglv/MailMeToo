@@ -130,7 +130,7 @@
 		71E1B3E913A663E40083323C /* SMTPClientTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientTests.mm; path = Classes/Tests/SMTPClientTests.mm; sourceTree = "<group>"; };
 		71E1B41213A667DD0083323C /* SMTPClient Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SMTPClient Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* SMTPClientApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientApp-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* smtp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smtp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* SMTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +192,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* smtp.app */,
+				8D1107320486CEB800E47090 /* SMTPClient.app */,
 				595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */,
 				71E1B41213A667DD0083323C /* SMTPClient Tests.octest */,
 			);
@@ -418,7 +418,7 @@
 			name = "SMTPClient App";
 			productInstallPath = "$(HOME)/Applications";
 			productName = smtp;
-			productReference = 8D1107320486CEB800E47090 /* smtp.app */;
+			productReference = 8D1107320486CEB800E47090 /* SMTPClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -686,7 +686,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Development/osirix-trunk/nitrogen/build/Development\"",
+					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -795,15 +795,14 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Projects/osirix-branch-CoreData/nitrogen/build/Development\"",
-					"\"$(SRCROOT)/../../Development/osirix-trunk/nitrogen/build/Development\"",
+					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = smtp_Prefix.pch;
-				INFOPLIST_FILE = "smtp-Info.plist";
+				GCC_PREFIX_HEADER = SMTPClientApp.pch;
+				INFOPLIST_FILE = "SMTPClientApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = smtp;
+				PRODUCT_NAME = SMTPClient;
 			};
 			name = Release;
 		};

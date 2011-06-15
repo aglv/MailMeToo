@@ -40,24 +40,24 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSString* _subject;
 	NSString* _from;
 	NSString* _fromDescription;
-	NSString* _to;
-	NSString* _toDescription;
+	NSArray* _to;
 	NSInteger _status;
 	NSInteger _substatus;
 	NSArray* _authModes;
 	BOOL _canStartTLS;
+	NSInteger _rcptToCount;
 }
 
 @property(retain) NSString* message;
 @property(retain) NSString* subject;
 @property(retain) NSString* from;
 @property(retain) NSString* fromDescription;
-@property(retain) NSString* to;
-@property(retain) NSString* toDescription;
+@property(retain) NSArray* to;
 @property NSInteger status;
 @property NSInteger substatus;
 @property(retain) NSArray* authModes;
 @property BOOL canStartTLS;
+@property NSInteger rcptToCount;
 
 @end
 
@@ -132,9 +132,9 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	}
 }
 
--(void)sendMessage:(NSString*)message withSubject:(NSString*)subject from:(NSString*)from to:(NSString*)to {
+-(void)sendMessage:(NSString*)message withSubject:(NSString*)subject from:(NSString*)from to:(NSString*)toAddresses {
 	if (!from.length) [NSException raise:NSInvalidArgumentException format:@"Empty sender email address"];
-	if (!to.length) [NSException raise:NSInvalidArgumentException format:@"Empty destination email address"];
+	if (!toAddresses.length) [NSException raise:NSInvalidArgumentException format:@"Empty destination email address"];
 	
 	NSHost* host = [NSHost hostWithName:self.address];
 	if (!host) [NSException raise:NSInvalidArgumentException format:@"Invalid server address"];
@@ -143,13 +143,21 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	context.message = message;
 	context.subject = subject;
 	
-	NSString* temp;
-	[[self class] _splitAddress:from intoEmail:&from description:&temp];
-	context.from = from;
-	context.fromDescription = temp;
-	[[self class] _splitAddress:to intoEmail:&to description:&temp];
+	NSString* tempAddress;
+	NSString* tempLabel;
+	
+	[[self class] _splitAddress:from intoEmail:&tempAddress description:&tempLabel];
+	context.from = tempAddress;
+	context.fromDescription = tempLabel;
+	
+	NSMutableArray* to = [NSMutableArray array];
+	for (NSString* ito in [toAddresses componentsSeparatedByString:@","]) {
+		ito = [ito stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+		[[self class] _splitAddress:ito intoEmail:&tempAddress description:&tempLabel];
+		[to addObject:[NSArray arrayWithObjects: tempAddress, tempLabel, nil]];
+	}
+	
 	context.to = to;
-	context.toDescription = temp;
 	
 	[N2Connection sendSynchronousRequest:nil toAddress:self.address port:self.port tls:(_tlsMode == SMTPClientTLSModeTLS) dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
 }
@@ -311,10 +319,13 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 		case StatusMAIL: {
 			switch (code) {
 				case 250:
-					NSString* to = context.to;
-					if ([to rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]].location == NSNotFound)
-						to = [NSString stringWithFormat:@"<%@>", to];
-					[self _writeLine:[@"RCPT TO: " stringByAppendingString:to] to:connection];
+					for (NSArray* ito in context.to) {
+						NSString* to = [ito objectAtIndex:0];
+						if ([to rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]].location == NSNotFound)
+							to = [NSString stringWithFormat:@"<%@>", to];
+						[self _writeLine:[@"RCPT TO: " stringByAppendingString:to] to:connection];
+						context.rcptToCount += 1;
+					}
 					context.status = StatusRCPT;
 					return;
 			}
@@ -322,8 +333,11 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 		case StatusRCPT: {
 			switch (code) {
 				case 250: {
-					[self _writeLine:@"DATA" to:connection];
-					context.status = StatusDATA;
+					context.rcptToCount -= 1;
+					if (context.rcptToCount == 0) {
+						[self _writeLine:@"DATA" to:connection];
+						context.status = StatusDATA;
+					}
 					return;
 				}
 			}
@@ -341,9 +355,17 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 					if (context.fromDescription)
 						[self _writeLine:[NSString stringWithFormat:@"From: =?UTF-8?B?%@?= <%@>", [[context.fromDescription dataUsingEncoding:NSUTF8StringEncoding] base64], context.from] to:connection];
 					else [self _writeLine:[NSString stringWithFormat:@"From: %@", context.from] to:connection];
-					if (context.toDescription)
-						[self _writeLine:[NSString stringWithFormat:@"To: =?UTF-8?B?%@?= <%@>", [[context.toDescription dataUsingEncoding:NSUTF8StringEncoding] base64], context.to] to:connection];
-					else [self _writeLine:[NSString stringWithFormat:@"To: %@", context.to] to:connection];
+					
+					NSMutableString* to = [NSMutableString string];
+					for (NSArray* ito in context.to) {
+						if (to.length)
+							[to appendString:@", "];
+						if (ito.count > 1)
+							[to appendFormat:@"=?UTF-8?B?%@?= <%@>", [[[ito objectAtIndex:1] dataUsingEncoding:NSUTF8StringEncoding] base64], [ito objectAtIndex:0]];
+						else [to appendFormat:@"%@", [ito objectAtIndex:0]];
+					}
+					[self _writeLine:[NSString stringWithFormat:@"To: %@", to] to:connection];
+					
 					[self _writeLine:[NSString stringWithFormat:@"Subject: =?UTF-8?B?%@?=", [[context.subject dataUsingEncoding:NSUTF8StringEncoding] base64]] to:connection];
 					[self _writeLine:@"Mime-Version: 1.0;" to:connection];
 					[self _writeLine:@"Content-Type: text/html; charset=\"UTF-8\";" to:connection];
@@ -435,11 +457,11 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 @synthesize from = _from;
 @synthesize fromDescription = _fromDescription;
 @synthesize to = _to;
-@synthesize toDescription = _toDescription;
 @synthesize status = _status;
 @synthesize substatus = _substatus;
 @synthesize authModes = _authModes;
 @synthesize canStartTLS = _canStartTLS;
+@synthesize rcptToCount = _rcptToCount;
 
 -(void)setStatus:(NSInteger)status {
 	_status = status;
@@ -452,7 +474,6 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 	self.from = nil;
 	self.fromDescription = nil;
 	self.to = nil;
-	self.toDescription = nil;
 	self.authModes = nil;
 	[super dealloc];
 }
