@@ -1,0 +1,5 @@
+This project uses the Nitrogen framework, an LGPL library available on SourceForge.net in the OsiriX repository.
+
+To obtain Nitrogen, do this:
+
+svn co https://osirix.svn.sourceforge.net/svnroot/osirix/osirix/nitrogen Nitrogen

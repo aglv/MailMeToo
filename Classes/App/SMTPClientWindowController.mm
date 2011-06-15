@@ -2,7 +2,7 @@
 //  SMPClientWindowComtroller.mm
 //
 //  Created by Alessandro Volz on 08.06.11.
-//  LGPL.
+//  Copyright 2011 Alessandro Volz. All rights reserved.
 //
 
 #import "SMTPClientWindowController.h"

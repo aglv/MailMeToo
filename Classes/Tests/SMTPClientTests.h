@@ -2,7 +2,7 @@
 //  SMTPClientTests.h
 //
 //  Created by Alessandro Volz on 6/13/11.
-//  LGPL.
+//  Copyright 2011 Alessandro Volz. All rights reserved.
 //
 
 #import <SenTestingKit/SenTestingKit.h>
