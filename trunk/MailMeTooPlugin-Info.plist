@@ -5,28 +5,28 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>MailMeToo</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>ch.alessandrovolz.growl.view.mailmetoo</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>MailMeToo</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
+	<key>CFBundlePackageType</key>
+	<string>DISP</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>GRRR</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>0.1</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>GrowlPluginAuthor</key>
+	<string>Alessandro Volz</string>
+	<key>GrowlPluginDescription</key>
+	<string>A plugin that growls emails, sent through a specified SMTP server.</string>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
+	<string>MailMeTooDisplay</string>
 </dict>
 </plist>

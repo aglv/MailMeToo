@@ -5,7 +5,7 @@
 //  Copyright 2011 Alessandro Volz. All rights reserved.
 //
 
-#import "SMTPClientTests.h"
+#import "MailMeTooTests.h"
 #import "SMTPClient.h"
 
 @implementation SMTPClientTests

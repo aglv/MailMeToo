@@ -1,23 +1,23 @@
 //
-//  SMTPClientAppDelegate.m
+//  MailMeTooAppDelegate.m
 //
 //  Created by Alessandro Volz on 08.06.11.
 //  Copyright 2011 Alessandro Volz. All rights reserved.
 //
 
-#import "SMTPClientAppDelegate.h"
-#import "SMTPClientWindowController.h"
+#import "MailMeTooAppDelegate.h"
+#import "MailMeTooWindowController.h"
 #import "SMTPClient.h"
 
 
-@implementation SMTPClientAppDelegate
+@implementation MailMeTooAppDelegate
 
 -(id)init {
 	if ((self = [super init])) {
 		NSDictionary* defaults = [NSDictionary dictionaryWithObjectsAndKeys: 
-								  @"mailhost", SMTPServerAddressKey,
+								 // @"mailhost", SMTPServerAddressKey,
 								 // [NSNumber numberWithInt:25], SMTPServerPortKey,
-								  [NSNumber numberWithInteger:0], SMTPServerTLSModeKey,
+								  [NSNumber numberWithInteger:SMTPClientTLSModeSTARTTLSIfPossible], SMTPServerTLSModeKey,
 								 // nil, SMTPFromKey,
 								  [NSNumber numberWithBool:NO], SMTPServerAuthFlagKey,
 								 // nil, SMTPServerAuthUsernameKey,
@@ -25,7 +25,7 @@
 								 // nil, SMTPToKey,
 								 // nil, SMTPMessageKey,
 								  NULL];
-		[NSUserDefaults.standardUserDefaults registerDefaults:defaults];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 	}
 	
 	return self;
@@ -33,7 +33,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification {
 	
-	SMTPClientWindowController* ewc = [SMTPClientWindowController new];
+	MailMeTooWindowController* ewc = [MailMeTooWindowController new];
 	[ewc.window makeKeyAndOrderFront:self];
 	
 }

@@ -217,6 +217,17 @@ enum SMTPClientContextSubstatuses {
 	[connection writeData:[NSData dataWithBytesNoCopy:(void*)"\r\n" length:2 freeWhenDone:NO]];
 }
 
+-(void)_ehlo:(N2Connection*)connection context:(_SMTPSendMessageContext*)context {
+	[self _writeLine:[@"EHLO " stringByAppendingString:[N2Shell hostname]] to:connection];
+	context.status = StatusEHLO;
+}
+
+-(void)_mail:(N2Connection*)connection context:(_SMTPSendMessageContext*)context {
+	NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
+	[self _writeLine:[@"MAIL FROM: " stringByAppendingString:from] to:connection];
+	context.status = StatusMAIL;
+}
+
 -(void)_connection:(N2Connection*)connection handleCode:(NSInteger)code withMessage:(NSString*)message separator:(unichar)separator context:(_SMTPSendMessageContext*)context {
 //	NSLog(@"HANDLE: [Status %d] Handling %d with %@", context.status, code, message);
 	
@@ -228,12 +239,13 @@ enum SMTPClientContextSubstatuses {
 			switch (code) {
 				case 220:
 					if ((![connection isSecure] && _tlsMode) || (self.username && self.password)) {
-EHLO:					[self _writeLine:[@"EHLO " stringByAppendingString:[N2Shell hostname]] to:connection];
-						context.status = StatusEHLO;
+						[self _ehlo:connection context:context];
+						return;
 					} else {
 						[self _writeLine:[@"HELO " stringByAppendingString:[N2Shell hostname]] to:connection];
 						context.status = StatusHELO;
-					} return;
+						return;
+					}
 			}
 		} break;
 		case StatusHELO:
@@ -256,7 +268,10 @@ EHLO:					[self _writeLine:[@"EHLO " stringByAppendingString:[N2Shell hostname]]
 								context.status = StatusSTARTTLS;
 							} else if (_tlsMode == SMTPClientTLSModeSTARTTLSOrClose)
 								[NSException raise:NSGenericException format:@"Server doesn't support STARTTLS"];
-							else goto MAIL;
+							else {
+								[self _mail:connection context:context];
+								return;
+							}
 						} else
 						if (self.username && self.password) {
 							if ([context.authModes containsObject:@"CRAM-MD5"]) {
@@ -276,9 +291,7 @@ EHLO:					[self _writeLine:[@"EHLO " stringByAppendingString:[N2Shell hostname]]
 							}
 							else [NSException raise:NSGenericException format:@"The server doesn't allow any authentication techniques supported by this client."];
 						} else {
-MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
-							[self _writeLine:[@"MAIL FROM: " stringByAppendingString:from] to:connection];
-							context.status = StatusMAIL;
+							[self _mail:connection context:context];
 							return;
 						}
 					return;
@@ -287,7 +300,8 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 		case StatusSTARTTLS: {
 			if (code == 220) {
 				[connection startTLS];
-				goto EHLO;
+				[self _ehlo:connection context:context];
+				return;
 			}
 		} break;
 		case StatusAUTH: {
@@ -295,7 +309,8 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 				case PlainAUTH:
 					switch (code) {
 						case 235:
-							goto MAIL;
+							[self _mail:connection context:context];
+							return;
 					} break;
 				case LoginAUTH:
 					switch (code) {
@@ -309,7 +324,8 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 								return;
 							}
 						case 235:
-							goto MAIL;
+							[self _mail:connection context:context];
+							return;
 					} break;
 				case CramMD5AUTH:
 					switch (code) {
@@ -321,7 +337,8 @@ MAIL:						NSString* from = [NSString stringWithFormat:@"<%@>", context.from];
 							return;
 						} break;
 						case 235:
-							goto MAIL;
+							[self _mail:connection context:context];
+							return;
 					} break;
 
 			}
