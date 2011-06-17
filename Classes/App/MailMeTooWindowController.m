@@ -1,17 +1,16 @@
 //
-//  SMPClientWindowComtroller.mm
+//  MailMeTooWindowComtroller.mm
 //
 //  Created by Alessandro Volz on 08.06.11.
 //  Copyright 2011 Alessandro Volz. All rights reserved.
 //
 
-#import "SMTPClientWindowController.h"
-#import "SMTPClientAppDelegate.h"
+#import "MailMeTooWindowController.h"
 #import "SMTPClient.h"
 #import "Nitrogen/N2Debug.h"
 
 
-@implementation SMTPClientWindowController
+@implementation MailMeTooWindowController
 
 -(id)init {
 	return [super initWithWindowNibName:@"EmailWindow" owner:self];

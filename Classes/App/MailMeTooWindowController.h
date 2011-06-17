@@ -8,7 +8,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SMTPClientWindowController : NSWindowController {
+@interface MailMeTooWindowController : NSWindowController {
 	IBOutlet NSTextField* _addressField;
 	IBOutlet NSTextField* _portField;
 	IBOutlet NSMatrix* _tlsMatrix;

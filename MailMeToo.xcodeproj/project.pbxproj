@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		256AC3DA0F4B6AC300CF3369 /* SMTPClientAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* SMTPClientAppDelegate.mm */; };
-		5910DC4813A7B36B009F7A62 /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
-		595CA53C13A1025900A24CB2 /* SMTPClientGrowlDisplay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53313A1025900A24CB2 /* SMTPClientGrowlDisplay.mm */; };
-		595CA53D13A1025900A24CB2 /* SMTPClientGrowlPrefs.mm in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53513A1025900A24CB2 /* SMTPClientGrowlPrefs.mm */; };
-		595CA78413A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595CA78213A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib */; };
-		59E0BD51139FB38800477835 /* SMTPClientWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BD50139FB38800477835 /* SMTPClientWindowController.mm */; };
+		256AC3DA0F4B6AC300CF3369 /* MailMeTooAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MailMeTooAppDelegate.m */; };
+		5910DC4813A7B36B009F7A62 /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
+		595CA53C13A1025900A24CB2 /* MailMeTooDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53313A1025900A24CB2 /* MailMeTooDisplay.m */; };
+		595CA53D13A1025900A24CB2 /* MailMeTooPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 595CA53513A1025900A24CB2 /* MailMeTooPreferences.m */; };
+		59E0BD51139FB38800477835 /* MailMeTooWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BD50139FB38800477835 /* MailMeTooWindowController.m */; };
 		59E0BD60139FB4EA00477835 /* EmailWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E0BD5E139FB4EA00477835 /* EmailWindow.xib */; };
-		59E0BE4E139FC41D00477835 /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
+		59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
 		714CAF6413A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
 		714CAF6513A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
 		714CAF6613A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
@@ -25,10 +24,11 @@
 		71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
-		71E1B42513A6686D0083323C /* SMTPClientTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71E1B3E913A663E40083323C /* SMTPClientTests.mm */; };
-		71E1B42613A668750083323C /* SMTPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.mm */; };
+		71ACBDB713AC03AB004C8E22 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71ACBDB513AC03AB004C8E22 /* Preferences.xib */; };
+		71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E1B3E913A663E40083323C /* MailMeTooTests.m */; };
+		71E1B42613A668750083323C /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* SMTPClientApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* SMTPClientApp.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072D0486CEB800E47090 /* MailMeTooApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* MailMeTooApp.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,37 +104,37 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/App/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		256AC3D80F4B6AC300CF3369 /* SMTPClientAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientAppDelegate.h; path = Classes/App/SMTPClientAppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* SMTPClientAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientAppDelegate.mm; path = Classes/App/SMTPClientAppDelegate.mm; sourceTree = "<group>"; };
-		256AC3F00F4B6AF500CF3369 /* SMTPClientApp.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTPClientApp.pch; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* SMTPClientApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTPClientApp.m; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* MailMeTooAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooAppDelegate.h; path = Classes/App/MailMeTooAppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* MailMeTooAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooAppDelegate.m; path = Classes/App/MailMeTooAppDelegate.m; sourceTree = "<group>"; };
+		256AC3F00F4B6AF500CF3369 /* MailMeTooApp.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailMeTooApp.pch; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* MailMeTooApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailMeTooApp.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nitrogen.xcodeproj; path = "../osirix-trunk/nitrogen/Nitrogen.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SMTPMail.growlView; sourceTree = BUILT_PRODUCTS_DIR; };
-		595CA48E13A0FF9900A24CB2 /* SMTPClientGrowlPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientGrowlPlugin-Info.plist"; sourceTree = "<group>"; };
+		595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MailMeToo.growlView; sourceTree = BUILT_PRODUCTS_DIR; };
+		595CA48E13A0FF9900A24CB2 /* MailMeTooPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MailMeTooPlugin-Info.plist"; sourceTree = "<group>"; };
 		595CA52113A1025900A24CB2 /* GrowlDisplayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDisplayPlugin.h; sourceTree = "<group>"; };
-		595CA53213A1025900A24CB2 /* SMTPClientGrowlDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientGrowlDisplay.h; path = Classes/GrowlPlugin/SMTPClientGrowlDisplay.h; sourceTree = "<group>"; };
-		595CA53313A1025900A24CB2 /* SMTPClientGrowlDisplay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientGrowlDisplay.mm; path = Classes/GrowlPlugin/SMTPClientGrowlDisplay.mm; sourceTree = "<group>"; };
-		595CA53413A1025900A24CB2 /* SMTPClientGrowlPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientGrowlPrefs.h; path = Classes/GrowlPlugin/SMTPClientGrowlPrefs.h; sourceTree = "<group>"; };
-		595CA53513A1025900A24CB2 /* SMTPClientGrowlPrefs.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientGrowlPrefs.mm; path = Classes/GrowlPlugin/SMTPClientGrowlPrefs.mm; sourceTree = "<group>"; };
+		595CA53213A1025900A24CB2 /* MailMeTooDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooDisplay.h; path = Classes/Plugin/MailMeTooDisplay.h; sourceTree = "<group>"; };
+		595CA53313A1025900A24CB2 /* MailMeTooDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooDisplay.m; path = Classes/Plugin/MailMeTooDisplay.m; sourceTree = "<group>"; };
+		595CA53413A1025900A24CB2 /* MailMeTooPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooPreferences.h; path = Classes/Plugin/MailMeTooPreferences.h; sourceTree = "<group>"; };
+		595CA53513A1025900A24CB2 /* MailMeTooPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooPreferences.m; path = Classes/Plugin/MailMeTooPreferences.m; sourceTree = "<group>"; };
 		595CA74013A11F0D00A24CB2 /* GrowlPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlPlugin.h; sourceTree = "<group>"; };
 		595CA74313A11F4300A24CB2 /* GrowlApplicationNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlApplicationNotification.h; sourceTree = "<group>"; };
-		595CA78313A122AC00A24CB2 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/GrowlPlugin/English.lproj/SMTPClientGrowlPrefs.xib; sourceTree = "<group>"; };
-		59E0BD4F139FB38800477835 /* SMTPClientWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientWindowController.h; path = Classes/App/SMTPClientWindowController.h; sourceTree = "<group>"; };
-		59E0BD50139FB38800477835 /* SMTPClientWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientWindowController.mm; path = Classes/App/SMTPClientWindowController.mm; sourceTree = "<group>"; };
+		59E0BD4F139FB38800477835 /* MailMeTooWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooWindowController.h; path = Classes/App/MailMeTooWindowController.h; sourceTree = "<group>"; };
+		59E0BD50139FB38800477835 /* MailMeTooWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooWindowController.m; path = Classes/App/MailMeTooWindowController.m; sourceTree = "<group>"; };
 		59E0BD5F139FB4EA00477835 /* EmailWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = EmailWindow.xib; path = Resources/App/English.lproj/EmailWindow.xib; sourceTree = "<group>"; };
 		59E0BE4C139FC41D00477835 /* SMTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClient.h; path = Classes/SMTPClient.h; sourceTree = "<group>"; };
-		59E0BE4D139FC41D00477835 /* SMTPClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClient.mm; path = Classes/SMTPClient.mm; sourceTree = "<group>"; };
+		59E0BE4D139FC41D00477835 /* SMTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMTPClient.m; path = Classes/SMTPClient.m; sourceTree = "<group>"; };
 		59EAC72213A25C480092BC07 /* GrowlDefinesInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDefinesInternal.h; sourceTree = "<group>"; };
 		714CAF6313A669D900DAA5E5 /* Nitrogen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nitrogen.framework; path = "../osirix-trunk/nitrogen/build/Development/Nitrogen.framework"; sourceTree = SOURCE_ROOT; };
 		71ACBCEF13A951AD004C8E22 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		71E1B3DE13A663370083323C /* SMTPClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SMTPClientTests-Info.plist"; sourceTree = "<group>"; };
-		71E1B3E813A663E40083323C /* SMTPClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClientTests.h; path = Classes/Tests/SMTPClientTests.h; sourceTree = "<group>"; };
-		71E1B3E913A663E40083323C /* SMTPClientTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SMTPClientTests.mm; path = Classes/Tests/SMTPClientTests.mm; sourceTree = "<group>"; };
-		71E1B41213A667DD0083323C /* SMTPClient Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SMTPClient Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D1107310486CEB800E47090 /* SMTPClientApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SMTPClientApp-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* SMTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		71ACBDB613AC03AB004C8E22 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Plugin/English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		71E1B3DE13A663370083323C /* MailMeTooTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MailMeTooTests-Info.plist"; sourceTree = "<group>"; };
+		71E1B3E813A663E40083323C /* MailMeTooTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooTests.h; path = Classes/Tests/MailMeTooTests.h; sourceTree = "<group>"; };
+		71E1B3E913A663E40083323C /* MailMeTooTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooTests.m; path = Classes/Tests/MailMeTooTests.m; sourceTree = "<group>"; };
+		71E1B41213A667DD0083323C /* MailMeToo.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MailMeToo.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107310486CEB800E47090 /* MailMeTooApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MailMeTooApp-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* MailMeToo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MailMeToo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				59E0BE4C139FC41D00477835 /* SMTPClient.h */,
-				59E0BE4D139FC41D00477835 /* SMTPClient.mm */,
+				59E0BE4D139FC41D00477835 /* SMTPClient.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -199,9 +199,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* SMTPClient.app */,
-				595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */,
-				71E1B41213A667DD0083323C /* SMTPClient Tests.octest */,
+				8D1107320486CEB800E47090 /* MailMeToo.app */,
+				595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */,
+				71E1B41213A667DD0083323C /* MailMeToo.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,8 +222,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				256AC3F00F4B6AF500CF3369 /* SMTPClientApp.pch */,
-				29B97316FDCFA39411CA2CEA /* SMTPClientApp.m */,
+				256AC3F00F4B6AF500CF3369 /* MailMeTooApp.pch */,
+				29B97316FDCFA39411CA2CEA /* MailMeTooApp.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -252,7 +252,7 @@
 		595CA3EE13A0F8BE00A24CB2 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* SMTPClientApp-Info.plist */,
+				8D1107310486CEB800E47090 /* MailMeTooApp-Info.plist */,
 				595CA40713A0F96B00A24CB2 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -272,10 +272,10 @@
 		595CA40713A0F96B00A24CB2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				256AC3D80F4B6AC300CF3369 /* SMTPClientAppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* SMTPClientAppDelegate.mm */,
-				59E0BD4F139FB38800477835 /* SMTPClientWindowController.h */,
-				59E0BD50139FB38800477835 /* SMTPClientWindowController.mm */,
+				256AC3D80F4B6AC300CF3369 /* MailMeTooAppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* MailMeTooAppDelegate.m */,
+				59E0BD4F139FB38800477835 /* MailMeTooWindowController.h */,
+				59E0BD50139FB38800477835 /* MailMeTooWindowController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -283,7 +283,7 @@
 		595CA48C13A0FF5E00A24CB2 /* Growl Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				595CA48E13A0FF9900A24CB2 /* SMTPClientGrowlPlugin-Info.plist */,
+				595CA48E13A0FF9900A24CB2 /* MailMeTooPlugin-Info.plist */,
 				595CA51513A1024700A24CB2 /* Classes */,
 				595CA55113A1074700A24CB2 /* Resources */,
 			);
@@ -294,10 +294,10 @@
 			isa = PBXGroup;
 			children = (
 				595CA51913A1025900A24CB2 /* Growl */,
-				595CA53213A1025900A24CB2 /* SMTPClientGrowlDisplay.h */,
-				595CA53313A1025900A24CB2 /* SMTPClientGrowlDisplay.mm */,
-				595CA53413A1025900A24CB2 /* SMTPClientGrowlPrefs.h */,
-				595CA53513A1025900A24CB2 /* SMTPClientGrowlPrefs.mm */,
+				595CA53213A1025900A24CB2 /* MailMeTooDisplay.h */,
+				595CA53313A1025900A24CB2 /* MailMeTooDisplay.m */,
+				595CA53413A1025900A24CB2 /* MailMeTooPreferences.h */,
+				595CA53513A1025900A24CB2 /* MailMeTooPreferences.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -311,13 +311,13 @@
 				59EAC72213A25C480092BC07 /* GrowlDefinesInternal.h */,
 			);
 			name = Growl;
-			path = Classes/GrowlPlugin/Growl;
+			path = Classes/Plugin/Growl;
 			sourceTree = "<group>";
 		};
 		595CA55113A1074700A24CB2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				595CA78213A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib */,
+				71ACBDB513AC03AB004C8E22 /* Preferences.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -342,9 +342,8 @@
 		71E1B3E713A663B30083323C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				71E1B3DE13A663370083323C /* SMTPClientTests-Info.plist */,
+				71E1B3DE13A663370083323C /* MailMeTooTests-Info.plist */,
 				71E1B42313A668380083323C /* Classes */,
-				71E1B42413A6683E0083323C /* Resources */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -352,25 +351,18 @@
 		71E1B42313A668380083323C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				71E1B3E813A663E40083323C /* SMTPClientTests.h */,
-				71E1B3E913A663E40083323C /* SMTPClientTests.mm */,
+				71E1B3E813A663E40083323C /* MailMeTooTests.h */,
+				71E1B3E913A663E40083323C /* MailMeTooTests.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		71E1B42413A6683E0083323C /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		595CA48013A0FF2C00A24CB2 /* SMTPClient Growl Plugin */ = {
+		595CA48013A0FF2C00A24CB2 /* MailMeToo Growl Plugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 595CA48513A0FF2D00A24CB2 /* Build configuration list for PBXNativeTarget "SMTPClient Growl Plugin" */;
+			buildConfigurationList = 595CA48513A0FF2D00A24CB2 /* Build configuration list for PBXNativeTarget "MailMeToo Growl Plugin" */;
 			buildPhases = (
 				595CA47D13A0FF2C00A24CB2 /* Resources */,
 				595CA62C13A115C700A24CB2 /* Copy Frameworks */,
@@ -383,14 +375,14 @@
 			dependencies = (
 				5910DAE713A7A926009F7A62 /* PBXTargetDependency */,
 			);
-			name = "SMTPClient Growl Plugin";
+			name = "MailMeToo Growl Plugin";
 			productName = "SMTPClient Growl Plugin";
-			productReference = 595CA48113A0FF2C00A24CB2 /* SMTPMail.growlView */;
+			productReference = 595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */;
 			productType = "com.apple.product-type.bundle";
 		};
-		71E1B41113A667DD0083323C /* SMTPClient Tests */ = {
+		71E1B41113A667DD0083323C /* MailMeToo Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "SMTPClient Tests" */;
+			buildConfigurationList = 71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "MailMeToo Tests" */;
 			buildPhases = (
 				71E1B40D13A667DD0083323C /* Resources */,
 				714CAF0913A6696000DAA5E5 /* Copy Frameworks */,
@@ -403,14 +395,14 @@
 			);
 			dependencies = (
 			);
-			name = "SMTPClient Tests";
+			name = "MailMeToo Tests";
 			productName = "SMTPClient Tests";
-			productReference = 71E1B41213A667DD0083323C /* SMTPClient Tests.octest */;
+			productReference = 71E1B41213A667DD0083323C /* MailMeToo.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
-		8D1107260486CEB800E47090 /* SMTPClient App */ = {
+		8D1107260486CEB800E47090 /* MailMeToo App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SMTPClient App" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MailMeToo App" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				59E0BE43139FC21100477835 /* Copy Frameworks */,
@@ -423,10 +415,10 @@
 			dependencies = (
 				5910DAA113A7A586009F7A62 /* PBXTargetDependency */,
 			);
-			name = "SMTPClient App";
+			name = "MailMeToo App";
 			productInstallPath = "$(HOME)/Applications";
 			productName = smtp;
-			productReference = 8D1107320486CEB800E47090 /* SMTPClient.app */;
+			productReference = 8D1107320486CEB800E47090 /* MailMeToo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -434,7 +426,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SMTPClient" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MailMeToo" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -454,9 +446,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* SMTPClient App */,
-				595CA48013A0FF2C00A24CB2 /* SMTPClient Growl Plugin */,
-				71E1B41113A667DD0083323C /* SMTPClient Tests */,
+				8D1107260486CEB800E47090 /* MailMeToo App */,
+				595CA48013A0FF2C00A24CB2 /* MailMeToo Growl Plugin */,
+				71E1B41113A667DD0083323C /* MailMeToo Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -483,7 +475,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				595CA78413A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib in Resources */,
+				71ACBDB713AC03AB004C8E22 /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,9 +561,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				595CA53C13A1025900A24CB2 /* SMTPClientGrowlDisplay.mm in Sources */,
-				595CA53D13A1025900A24CB2 /* SMTPClientGrowlPrefs.mm in Sources */,
-				5910DC4813A7B36B009F7A62 /* SMTPClient.mm in Sources */,
+				595CA53C13A1025900A24CB2 /* MailMeTooDisplay.m in Sources */,
+				595CA53D13A1025900A24CB2 /* MailMeTooPreferences.m in Sources */,
+				5910DC4813A7B36B009F7A62 /* SMTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,8 +571,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71E1B42513A6686D0083323C /* SMTPClientTests.mm in Sources */,
-				71E1B42613A668750083323C /* SMTPClient.mm in Sources */,
+				71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */,
+				71E1B42613A668750083323C /* SMTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,10 +580,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072D0486CEB800E47090 /* SMTPClientApp.m in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* SMTPClientAppDelegate.mm in Sources */,
-				59E0BD51139FB38800477835 /* SMTPClientWindowController.mm in Sources */,
-				59E0BE4E139FC41D00477835 /* SMTPClient.mm in Sources */,
+				8D11072D0486CEB800E47090 /* MailMeTooApp.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* MailMeTooAppDelegate.m in Sources */,
+				59E0BD51139FB38800477835 /* MailMeTooWindowController.m in Sources */,
+				59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,20 +619,20 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
-		595CA78213A122AC00A24CB2 /* SMTPClientGrowlPrefs.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				595CA78313A122AC00A24CB2 /* English */,
-			);
-			name = SMTPClientGrowlPrefs.xib;
-			sourceTree = "<group>";
-		};
 		59E0BD5E139FB4EA00477835 /* EmailWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				59E0BD5F139FB4EA00477835 /* EmailWindow.xib */,
 			);
 			name = EmailWindow.xib;
+			sourceTree = "<group>";
+		};
+		71ACBDB513AC03AB004C8E22 /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				71ACBDB613AC03AB004C8E22 /* English */,
+			);
+			name = Preferences.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -666,8 +658,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SMTPClientGrowlPlugin.pch;
-				INFOPLIST_FILE = "SMTPClientGrowlPlugin-Info.plist";
+				GCC_PREFIX_HEADER = MailMeTooPlugin.pch;
+				INFOPLIST_FILE = "MailMeTooPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Growl/Plugins";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -675,7 +667,7 @@
 					dynamic_lookup,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SMTPMail;
+				PRODUCT_NAME = MailMeToo;
 				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = growlView;
 			};
@@ -731,7 +723,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "SMTPClientTests-Info.plist";
+				INFOPLIST_FILE = "MailMeTooTests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -740,7 +732,7 @@
 					SenTestingKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = SMTPClient;
+				PRODUCT_NAME = MailMeToo;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -760,7 +752,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "SMTPClient Tests-Info.plist";
+				INFOPLIST_FILE = "MailMeTooTests-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -769,7 +761,7 @@
 					SenTestingKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = "SMTPClient Tests";
+				PRODUCT_NAME = "MailMeToo Tests";
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -789,10 +781,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SMTPClientApp.pch;
-				INFOPLIST_FILE = "SMTPClientApp-Info.plist";
+				GCC_PREFIX_HEADER = MailMeTooApp.pch;
+				INFOPLIST_FILE = "MailMeTooApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = SMTPClient;
+				PRODUCT_NAME = MailMeToo;
 			};
 			name = Debug;
 		};
@@ -843,7 +835,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		595CA48513A0FF2D00A24CB2 /* Build configuration list for PBXNativeTarget "SMTPClient Growl Plugin" */ = {
+		595CA48513A0FF2D00A24CB2 /* Build configuration list for PBXNativeTarget "MailMeToo Growl Plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				595CA48313A0FF2D00A24CB2 /* Debug */,
@@ -852,7 +844,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "SMTPClient Tests" */ = {
+		71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "MailMeToo Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				71E1B41413A667DE0083323C /* Debug */,
@@ -861,7 +853,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "SMTPClient App" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MailMeToo App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
@@ -870,7 +862,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SMTPClient" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MailMeToo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
