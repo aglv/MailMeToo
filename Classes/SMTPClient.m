@@ -63,6 +63,8 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 @property NSInteger rcptToCount;
 @property(retain) NSTimer* dataTimeoutTimer;
 
+-(void)reset;
+
 @end
 
 @interface NSString (UTF7)
@@ -70,7 +72,6 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 -(NSData*)UTF7Data;
 
 @end
-
 
 @implementation SMTPClient
 
@@ -171,16 +172,19 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	context.to = to;
 	
 	NSException* exception = nil;
-	for (NSNumber* port in self.ports)
+	for (NSNumber* port in self.ports) {
+		NSInteger portNumber = [port integerValue];
+		NSLog(@"Trying with port %d...", portNumber);
 		@try {
-			NSInteger portNumber= [port integerValue];
+			[context reset];
 			[N2Connection sendSynchronousRequest:nil toAddress:self.address port:portNumber tls:NO dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
 			exception = nil;
 			break;
 		} @catch (NSException* e) {
 			exception = e;
+			NSLog(@"Port %d: %@", portNumber, [e reason]);
 		}
-	if (exception)
+	} if (exception)
 		@throw exception;
 }
 
@@ -243,6 +247,28 @@ enum SMTPClientContextSubstatuses {
 	context.status = StatusMAIL;
 }
 
+-(void)_auth:(N2Connection*)connection context:(_SMTPSendMessageContext*)context {
+	if (self.username && self.password) {
+		if ([context.authModes containsObject:@"CRAM-MD5"]) {
+			[self _writeLine:@"AUTH CRAM-MD5" to:connection];
+			context.status = StatusAUTH;
+			context.substatus = CramMD5AUTH;
+		}
+		else if ([context.authModes containsObject:@"PLAIN"]) {
+			[self _writeLine:[@"AUTH PLAIN " stringByAppendingString:[[[NSString stringWithFormat:@"%@\0%@\0%@", self.username, self.username, self.password] dataUsingEncoding:NSUTF8StringEncoding] base64]] to:connection];
+			context.status = StatusAUTH;
+			context.substatus = PlainAUTH;
+		}
+		else if ([context.authModes containsObject:@"LOGIN"]) {
+			[self _writeLine:@"AUTH LOGIN" to:connection];
+			context.status = StatusAUTH;
+			context.substatus = LoginAUTH;
+		}
+		else [NSException raise:NSGenericException format:@"The server doesn't allow any authentication techniques supported by this client."];
+	} else
+		[self _mail:connection context:context];
+}
+
 -(void)_connection:(N2Connection*)connection handleCode:(NSInteger)code withMessage:(NSString*)message separator:(unichar)separator context:(_SMTPSendMessageContext*)context {
 //	NSLog(@"HANDLE: [Status %d] Handling %d with %@", context.status, code, message);
 	
@@ -283,32 +309,11 @@ enum SMTPClientContextSubstatuses {
 								context.status = StatusSTARTTLS;
 							} else if (_tlsMode == SMTPClientTLSModeTLSOrClose)
 								[NSException raise:NSGenericException format:@"Server doesn't support STARTTLS"];
-							else {
-								[self _mail:connection context:context];
-								return;
+							else { // TLSIfPossible, not possible...
+								[self _auth:connection context:context];
 							}
 						} else
-						if (self.username && self.password) {
-							if ([context.authModes containsObject:@"CRAM-MD5"]) {
-								[self _writeLine:@"AUTH CRAM-MD5" to:connection];
-								context.status = StatusAUTH;
-								context.substatus = CramMD5AUTH;
-							}
-							else if ([context.authModes containsObject:@"PLAIN"]) {
-								[self _writeLine:[@"AUTH PLAIN " stringByAppendingString:[[[NSString stringWithFormat:@"%@\0%@\0%@", self.username, self.username, self.password] dataUsingEncoding:NSUTF8StringEncoding] base64]] to:connection];
-								context.status = StatusAUTH;
-								context.substatus = PlainAUTH;
-							}
-							else if ([context.authModes containsObject:@"LOGIN"]) {
-								[self _writeLine:@"AUTH LOGIN" to:connection];
-								context.status = StatusAUTH;
-								context.substatus = LoginAUTH;
-							}
-							else [NSException raise:NSGenericException format:@"The server doesn't allow any authentication techniques supported by this client."];
-						} else {
-							[self _mail:connection context:context];
-							return;
-						}
+							[self _auth:connection context:context];
 					return;
 			}
 		} break;
@@ -496,7 +501,9 @@ enum SMTPClientContextSubstatuses {
 
 -(void)_dataTimeoutCallback:(NSTimer*)timer {
 	N2Connection* connection = [timer userInfo];
-	[connection startTLS];
+	if (_tlsMode)
+		[connection startTLS];
+	else [NSException raise:NSGenericException format:@"Connection stalled, probably wants TLS handshake, user said no TLS"];
 }
 
 @end
@@ -520,15 +527,22 @@ enum SMTPClientContextSubstatuses {
 	self.substatus = 0;
 }
 
+-(void)reset {
+	[self setStatus:InitialStatus];
+	self.authModes = nil;
+	self.canStartTLS = NO;
+	self.rcptToCount = 0;
+	[self.dataTimeoutTimer invalidate];
+	self.dataTimeoutTimer = nil;
+}
+
 -(void)dealloc {
 	self.message = nil;
 	self.subject = nil;
 	self.from = nil;
 	self.fromDescription = nil;
 	self.to = nil;
-	self.authModes = nil;
-	[self.dataTimeoutTimer invalidate];
-	self.dataTimeoutTimer = nil;
+	[self reset];
 	[super dealloc];
 }
 
