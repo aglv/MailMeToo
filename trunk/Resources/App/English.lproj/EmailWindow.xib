@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="8"/>
+			<integer value="104"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -319,7 +319,6 @@
 													<string key="NSContents">None</string>
 													<reference key="NSSupport" ref="26"/>
 													<reference key="NSControlView" ref="26288532"/>
-													<int key="NSTag">1</int>
 													<int key="NSButtonFlags">1211912703</int>
 													<int key="NSButtonFlags2">0</int>
 													<object class="NSButtonImageSource" key="NSAlternateImage" id="791661105">
@@ -726,10 +725,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="NSFrameAutosaveName">SMTPWindow</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1061401634">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>SMTPServerPorts</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
@@ -1218,7 +1213,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="56793391"/>
 							<reference ref="725923305"/>
 							<reference ref="18874434"/>
-							<reference ref="26288532"/>
 							<reference ref="275891477"/>
 							<reference ref="803029218"/>
 							<reference ref="132011165"/>
@@ -1226,6 +1220,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="944174702"/>
 							<reference ref="893687992"/>
 							<reference ref="454903093"/>
+							<reference ref="26288532"/>
 						</object>
 						<reference key="parent" ref="363403519"/>
 					</object>
@@ -1661,7 +1656,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCoAAAwxYAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABCoAAAwyYAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
