@@ -174,7 +174,7 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSException* exception = nil;
 	for (NSNumber* port in self.ports) {
 		NSInteger portNumber = [port integerValue];
-		NSLog(@"Trying with port %d...", portNumber);
+//		NSLog(@"Trying with port %d...", portNumber);
 		@try {
 			[context reset];
 			[N2Connection sendSynchronousRequest:nil toAddress:self.address port:portNumber tls:NO dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
@@ -182,7 +182,7 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 			break;
 		} @catch (NSException* e) {
 			exception = e;
-			NSLog(@"Port %d: %@", portNumber, [e reason]);
+//			NSLog(@"Port %d: %@", portNumber, [e reason]);
 		}
 	} if (exception)
 		@throw exception;
@@ -229,7 +229,7 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(void)_writeLine:(id)line to:(N2Connection*)connection {
-	NSLog(@"<- %@", line);
+//	NSLog(@"<- %@", line);
 	if ([line isKindOfClass:NSString.class])
 		line = [line dataUsingEncoding:NSUTF8StringEncoding];
 	[connection writeData:line];
@@ -441,7 +441,7 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(void)_connection:(N2Connection*)connection handleLine:(NSString*)line context:(_SMTPSendMessageContext*)context {
-	NSLog(@"-> %@", line);
+//	NSLog(@"-> %@", line);
 	
 	NSInteger code = 0;
 	NSString* message = nil;
