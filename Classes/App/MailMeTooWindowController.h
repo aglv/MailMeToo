@@ -10,7 +10,7 @@
 
 @interface MailMeTooWindowController : NSWindowController {
 	IBOutlet NSTextField* _addressField;
-	IBOutlet NSTextField* _portField;
+	IBOutlet NSTextField* _portsField;
 	IBOutlet NSMatrix* _tlsMatrix;
 	IBOutlet NSTextField* _fromField;
 	IBOutlet NSButton* _authCheckbox;

@@ -9,7 +9,7 @@
 
 
 extern const NSString* const SMTPServerAddressKey;
-extern const NSString* const SMTPServerPortKey;
+extern const NSString* const SMTPServerPortsKey;
 extern const NSString* const SMTPServerTLSModeKey;
 extern const NSString* const SMTPFromKey;
 extern const NSString* const SMTPServerAuthFlagKey;
@@ -20,23 +20,22 @@ extern const NSString* const SMTPSubjectKey;
 extern const NSString* const SMTPMessageKey;
 
 enum {
-	SMTPClientTLSModeNoTLS = 0,
-	SMTPClientTLSModeTLS = 1,
-	SMTPClientTLSModeSTARTTLSIfPossible = 2,
-	SMTPClientTLSModeSTARTTLSOrClose = 3
+	SMTPClientTLSModeNone = 0,
+	SMTPClientTLSModeTLSIfPossible = 1,
+	SMTPClientTLSModeTLSOrClose = 2
 };
 typedef NSInteger SMTPClientTLSMode;
 
 @interface SMTPClient : NSObject {
 	NSString* _address;
-	NSInteger _port;
+	NSArray* _ports;
 	SMTPClientTLSMode _tlsMode;
 	NSString* _authUsername;
 	NSString* _authPassword;
 }
 
 @property(readonly,retain) NSString* address;
-@property(readonly,assign) NSInteger port;
+@property(readonly,retain) NSArray* ports;
 @property(readonly,assign) SMTPClientTLSMode tlsMode;
 @property(readonly,retain) NSString* username;
 @property(readonly,retain) NSString* password;
@@ -45,9 +44,9 @@ typedef NSInteger SMTPClientTLSMode;
 
 +(void)send:(NSDictionary*)params;
 
-+(SMTPClient*)clientWithServerAddress:(NSString*)address port:(NSInteger)port tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
++(SMTPClient*)clientWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
 
--(id)initWithServerAddress:(NSString*)address port:(NSInteger)port tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
+-(id)initWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
 
 -(void)sendMessage:(NSString*)message withSubject:(NSString*)subject from:(NSString*)from to:(NSString*)to;
 

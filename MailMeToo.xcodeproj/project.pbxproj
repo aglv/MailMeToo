@@ -25,6 +25,9 @@
 		71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBDB713AC03AB004C8E22 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71ACBDB513AC03AB004C8E22 /* Preferences.xib */; };
+		71ACC2B613AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
+		71ACC2B713AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
+		71ACC2B813AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
 		71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E1B3E913A663E40083323C /* MailMeTooTests.m */; };
 		71E1B42613A668750083323C /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -129,6 +132,8 @@
 		714CAF6313A669D900DAA5E5 /* Nitrogen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nitrogen.framework; path = "../osirix-trunk/nitrogen/build/Development/Nitrogen.framework"; sourceTree = SOURCE_ROOT; };
 		71ACBCEF13A951AD004C8E22 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		71ACBDB613AC03AB004C8E22 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Plugin/English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		71ACC2B413AC91D2004C8E22 /* MailApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailApp.h; path = Classes/MailApp.h; sourceTree = "<group>"; };
+		71ACC2B513AC91D2004C8E22 /* MailApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailApp.m; path = Classes/MailApp.m; sourceTree = "<group>"; };
 		71E1B3DE13A663370083323C /* MailMeTooTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MailMeTooTests-Info.plist"; sourceTree = "<group>"; };
 		71E1B3E813A663E40083323C /* MailMeTooTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooTests.h; path = Classes/Tests/MailMeTooTests.h; sourceTree = "<group>"; };
 		71E1B3E913A663E40083323C /* MailMeTooTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooTests.m; path = Classes/Tests/MailMeTooTests.m; sourceTree = "<group>"; };
@@ -174,6 +179,8 @@
 			children = (
 				59E0BE4C139FC41D00477835 /* SMTPClient.h */,
 				59E0BE4D139FC41D00477835 /* SMTPClient.m */,
+				71ACC2B413AC91D2004C8E22 /* MailApp.h */,
+				71ACC2B513AC91D2004C8E22 /* MailApp.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -564,6 +571,7 @@
 				595CA53C13A1025900A24CB2 /* MailMeTooDisplay.m in Sources */,
 				595CA53D13A1025900A24CB2 /* MailMeTooPreferences.m in Sources */,
 				5910DC4813A7B36B009F7A62 /* SMTPClient.m in Sources */,
+				71ACC2B713AC91D2004C8E22 /* MailApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +581,7 @@
 			files = (
 				71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */,
 				71E1B42613A668750083323C /* SMTPClient.m in Sources */,
+				71ACC2B813AC91D2004C8E22 /* MailApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +593,7 @@
 				256AC3DA0F4B6AC300CF3369 /* MailMeTooAppDelegate.m in Sources */,
 				59E0BD51139FB38800477835 /* MailMeTooWindowController.m in Sources */,
 				59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */,
+				71ACC2B613AC91D2004C8E22 /* MailApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
