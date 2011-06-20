@@ -8,6 +8,7 @@
 #import "MailMeTooAppDelegate.h"
 #import "MailMeTooWindowController.h"
 #import "SMTPClient.h"
+#import "MailApp.h"
 
 
 @implementation MailMeTooAppDelegate
@@ -17,7 +18,7 @@
 		NSDictionary* defaults = [NSDictionary dictionaryWithObjectsAndKeys: 
 								 // @"mailhost", SMTPServerAddressKey,
 								 // [NSNumber numberWithInt:25], SMTPServerPortKey,
-								  [NSNumber numberWithInteger:SMTPClientTLSModeSTARTTLSIfPossible], SMTPServerTLSModeKey,
+								  [NSNumber numberWithInteger:SMTPClientTLSModeTLSIfPossible], SMTPServerTLSModeKey,
 								 // nil, SMTPFromKey,
 								  [NSNumber numberWithBool:NO], SMTPServerAuthFlagKey,
 								 // nil, SMTPServerAuthUsernameKey,
@@ -26,6 +27,8 @@
 								 // nil, SMTPMessageKey,
 								  NULL];
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+		
+		NSLog(@"Accounts: %@", [MailApp SmtpAccounts]);
 	}
 	
 	return self;

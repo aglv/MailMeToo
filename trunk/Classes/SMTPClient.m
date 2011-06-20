@@ -16,7 +16,7 @@
 
 
 const NSString* const SMTPServerAddressKey = @"SMTPServerAddress";
-const NSString* const SMTPServerPortKey = @"SMTPServerPort";
+const NSString* const SMTPServerPortsKey = @"SMTPServerPorts";
 const NSString* const SMTPServerTLSModeKey = @"SMTPServerTLSMode";
 const NSString* const SMTPFromKey = @"SMTPFrom";
 const NSString* const SMTPServerAuthFlagKey = @"SMTPServerAuthFlag";
@@ -29,12 +29,13 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 @interface SMTPClient ()
 
 @property(readwrite,retain) NSString* address;
-@property(readwrite,assign) NSInteger port;
+@property(readwrite,retain) NSArray* ports;
 @property(readwrite,assign) SMTPClientTLSMode tlsMode;
 @property(readwrite,retain) NSString* username;
 @property(readwrite,retain) NSString* password;
 
 @end
+
 
 @interface _SMTPSendMessageContext : NSObject {
 	NSString* _message;
@@ -47,6 +48,7 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSArray* _authModes;
 	BOOL _canStartTLS;
 	NSInteger _rcptToCount;
+	NSTimer* _dataTimeoutTimer;
 }
 
 @property(retain) NSString* message;
@@ -59,6 +61,7 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 @property(retain) NSArray* authModes;
 @property BOOL canStartTLS;
 @property NSInteger rcptToCount;
+@property(retain) NSTimer* dataTimeoutTimer;
 
 @end
 
@@ -72,14 +75,14 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 @implementation SMTPClient
 
 @synthesize address = _address;
-@synthesize port = _port;
+@synthesize ports = _ports;
 @synthesize tlsMode = _tlsMode;
 @synthesize username = _authUsername;
 @synthesize password = _authPassword;
 
 +(void)send:(NSDictionary*)params {
 	NSString* serverAddress = [params objectForKey:SMTPServerAddressKey ofClass:NSString.class];
-	NSNumber* serverPort = [params objectForKey:SMTPServerPortKey ofClass:NSNumber.class];
+	NSArray* serverPorts = [params objectForKey:SMTPServerPortsKey ofClass:NSArray.class];
 	NSNumber* serverTlsMode = [params objectForKey:SMTPServerTLSModeKey ofClass:NSNumber.class];
 	NSNumber* serverAuthFlag = [params objectForKey:SMTPServerAuthFlagKey ofClass:NSNumber.class];
 	NSString* serverUsername = [params objectForKey:SMTPServerAuthUsernameKey ofClass:NSString.class];
@@ -91,19 +94,19 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	
 	BOOL auth = [serverAuthFlag boolValue];
 	
-	[[[self class] clientWithServerAddress:serverAddress port:[serverPort integerValue] tlsMode:[serverTlsMode integerValue] username: auth? serverUsername : nil password: auth? serverPassword : nil ] sendMessage:message withSubject:subject from:from to:to];
+	[[[self class] clientWithServerAddress:serverAddress ports:serverPorts tlsMode:[serverTlsMode integerValue] username: auth? serverUsername : nil password: auth? serverPassword : nil ] sendMessage:message withSubject:subject from:from to:to];
 }
 
-+(SMTPClient*)clientWithServerAddress:(NSString*)address port:(NSInteger)port tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword {
-	return [[[[self class] alloc] initWithServerAddress:address port:port tlsMode:tlsMode username:authUsername password:authPassword] autorelease];
++(SMTPClient*)clientWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword {
+	return [[[[self class] alloc] initWithServerAddress:address ports:ports tlsMode:tlsMode username:authUsername password:authPassword] autorelease];
 }
 
--(id)initWithServerAddress:(NSString*)address port:(NSInteger)port tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword {
+-(id)initWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword {
 	if ((self = [super init])) {
 		if (!address.length) [NSException raise:NSInvalidArgumentException format:@"Invalid server address"];
 		self.address = address;
-		if (!port) port = (tlsMode == SMTPClientTLSModeTLS)? 465 : 25;
-		self.port = port;
+		if (ports.count) self.ports = ports;
+		else self.ports = [NSArray arrayWithObjects: [NSNumber numberWithInteger:25], [NSNumber numberWithInteger:465], [NSNumber numberWithInteger:587], NULL];
 		self.tlsMode = tlsMode;
 		self.username = authUsername;
 		self.password = authPassword;
@@ -114,6 +117,7 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 
 -(void)dealloc {
 	self.address = nil;
+	self.ports = nil;
 	self.username = nil;
 	self.password = nil;
 	[super dealloc];
@@ -166,7 +170,18 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	
 	context.to = to;
 	
-	[N2Connection sendSynchronousRequest:nil toAddress:self.address port:self.port tls:(_tlsMode == SMTPClientTLSModeTLS) dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
+	NSException* exception = nil;
+	for (NSNumber* port in self.ports)
+		@try {
+			NSInteger portNumber= [port integerValue];
+			[N2Connection sendSynchronousRequest:nil toAddress:self.address port:portNumber tls:NO dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
+			exception = nil;
+			break;
+		} @catch (NSException* e) {
+			exception = e;
+		}
+	if (exception)
+		@throw exception;
 }
 
 enum SMTPClientContextStatuses {
@@ -210,7 +225,7 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(void)_writeLine:(id)line to:(N2Connection*)connection {
-//	NSLog(@"<- %@", line);
+	NSLog(@"<- %@", line);
 	if ([line isKindOfClass:NSString.class])
 		line = [line dataUsingEncoding:NSUTF8StringEncoding];
 	[connection writeData:line];
@@ -266,7 +281,7 @@ enum SMTPClientContextSubstatuses {
 							if (context.canStartTLS) {
 								[self _writeLine:@"STARTTLS" to:connection];
 								context.status = StatusSTARTTLS;
-							} else if (_tlsMode == SMTPClientTLSModeSTARTTLSOrClose)
+							} else if (_tlsMode == SMTPClientTLSModeTLSOrClose)
 								[NSException raise:NSGenericException format:@"Server doesn't support STARTTLS"];
 							else {
 								[self _mail:connection context:context];
@@ -421,7 +436,7 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(void)_connection:(N2Connection*)connection handleLine:(NSString*)line context:(_SMTPSendMessageContext*)context {
-//	NSLog(@"-> %@", line);
+	NSLog(@"-> %@", line);
 	
 	NSInteger code = 0;
 	NSString* message = nil;
@@ -437,10 +452,21 @@ enum SMTPClientContextSubstatuses {
 }
 
 -(NSInteger)_connection:(N2Connection*)connection handleData:(NSData*)data context:(_SMTPSendMessageContext*)context {
-	if (!data) {
+	if (!data) { // close
 		[self _connection:connection handleCode:0 withMessage:nil separator:0 context:context];
 //		NSLog(@"Closing :(");
 		return 0;
+	}
+	
+	if (!data.length) { // open
+		context.dataTimeoutTimer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:0 target:self selector:@selector(_dataTimeoutCallback:) userInfo:connection repeats:NO];
+		[[NSRunLoop currentRunLoop] addTimer:context.dataTimeoutTimer forMode:NSDefaultRunLoopMode];
+		return 0;
+	}
+	
+	if (context.dataTimeoutTimer) {
+		[context.dataTimeoutTimer invalidate];
+		context.dataTimeoutTimer = nil;
 	}
 	
 	char* datap = (char*)data.bytes;
@@ -468,6 +494,11 @@ enum SMTPClientContextSubstatuses {
 	return datalused;
 }
 
+-(void)_dataTimeoutCallback:(NSTimer*)timer {
+	N2Connection* connection = [timer userInfo];
+	[connection startTLS];
+}
+
 @end
 
 @implementation _SMTPSendMessageContext
@@ -482,6 +513,7 @@ enum SMTPClientContextSubstatuses {
 @synthesize authModes = _authModes;
 @synthesize canStartTLS = _canStartTLS;
 @synthesize rcptToCount = _rcptToCount;
+@synthesize dataTimeoutTimer = _dataTimeoutTimer;
 
 -(void)setStatus:(NSInteger)status {
 	_status = status;
@@ -495,6 +527,8 @@ enum SMTPClientContextSubstatuses {
 	self.fromDescription = nil;
 	self.to = nil;
 	self.authModes = nil;
+	[self.dataTimeoutTimer invalidate];
+	self.dataTimeoutTimer = nil;
 	[super dealloc];
 }
 
@@ -528,10 +562,6 @@ enum SMTPClientContextSubstatuses {
 }
 
 @end
-
-
-
-
 
 
 
