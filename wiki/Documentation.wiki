@@ -6,7 +6,7 @@ The _SMTP Mail_ plugin was created to give the user more control on how the emai
 
 [http://growl-mail-smtp.googlecode.com/svn/wiki/prefs.png]
 
-However, while _MailMe_ works with any account type supported by _Mail.app_, _SMTP Mail_ only supports SMTP servers.
+SMTP Mail_ only supports SMTP servers. Exchange servers are not compatible.
 
 If you are not familiar with SMTP configuration, and if you don't have any particular reason not to use the _MailMe_ plugin, then better use _MailMe_ as a simpler solution. I built this plugin because I couldn't get _MailMe_ to work with _Mail.app_ and my employer's _Exchange_ server, and because I needed a clean Cocoa class to send emails through SMTP for another project.
 
@@ -15,6 +15,7 @@ If you are not familiar with SMTP configuration, and if you don't have any parti
 _SMTP Mail_ supports the following:
     * Basic and TLS connections, including the STARTTLS command, which allows basic connections to switch to TLS.
     * Anonymous and authenticated connections, with AUTH modes PLAIN, LOGIN and CRAM-MD5.
+    * Multiple recipients can be specified as a comma-separated list.
 
 = Testing =
 
