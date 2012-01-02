@@ -8,7 +8,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MailMeTooWindowController : NSWindowController {
+@interface MailMeTooWindowController : NSWindowController<NSMenuDelegate> {
 	IBOutlet NSTextField* _addressField;
 	IBOutlet NSTextField* _portsField;
 	IBOutlet NSMatrix* _tlsMatrix;

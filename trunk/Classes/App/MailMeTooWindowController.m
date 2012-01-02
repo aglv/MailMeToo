@@ -7,7 +7,7 @@
 
 #import "MailMeTooWindowController.h"
 #import "SMTPClient.h"
-
+#import "MailApp.h"
 
 @implementation MailMeTooWindowController
 
@@ -67,4 +67,65 @@
 	}
 }
 
+#pragma mark NSMenuDelegate
+
+-(void)menuWillOpen:(NSMenu*)menu {
+    [menu removeAllItems];
+    NSDictionary* accounts = [MailApp SmtpAccounts];
+//    NSLog(@"Accounts: %@", accounts);
+    for (NSString* name in accounts) {
+        NSDictionary* account = [accounts objectForKey:name];
+        NSMenuItem* mi = [[NSMenuItem alloc] initWithTitle:name action:@selector(selectMailAppAccount:) keyEquivalent:@""];
+        mi.target = self;
+        mi.representedObject = account;
+        [menu addItem:mi];
+    }
+}
+
+-(void)selectMailAppAccount:(NSMenuItem*)mi {
+    NSDictionary* account = mi.representedObject;
+//    NSLog(@"Account: %@", account);
+
+    [NSUserDefaults.standardUserDefaults setObject:[account objectForKey:SMTPServerAddressKey] forKey:SMTPServerAddressKey];
+    
+    NSArray* ports = [account objectForKey:SMTPServerPortsKey];
+    if (ports.count)
+        [NSUserDefaults.standardUserDefaults setObject:[ports componentsJoinedByString:@","] forKey:SMTPServerPortsKey];
+    else [NSUserDefaults.standardUserDefaults setObject:@"" forKey:SMTPServerPortsKey];
+    
+    [NSUserDefaults.standardUserDefaults setInteger:[[account objectForKey:SMTPServerTLSModeKey] integerValue] forKey:SMTPServerTLSModeKey];
+    
+    BOOL authFlag = [[account objectForKey:SMTPServerAuthFlagKey] boolValue];
+    [NSUserDefaults.standardUserDefaults setInteger:authFlag forKey:SMTPServerAuthFlagKey];
+    if (authFlag) {
+        NSString* username = [account objectForKey:SMTPServerAuthUsernameKey];
+//        [_usernameField setStringValue:username];
+        [NSUserDefaults.standardUserDefaults setObject:username forKey:SMTPServerAuthUsernameKey];
+        
+        if ([username rangeOfString:@"@"].length) {
+            @try {
+                NSString* desc;
+                [SMTPClient splitAddress:_fromField.stringValue intoEmail:NULL description:&desc];
+                desc = desc.length? [NSString stringWithFormat:@"%@ <%@>", desc, username] : username;
+//                [_fromField setStringValue:desc];
+                [NSUserDefaults.standardUserDefaults setObject:desc forKey:SMTPFromKey];
+            } @catch (...) {
+//                [_fromField setStringValue:username];
+                [NSUserDefaults.standardUserDefaults setObject:username forKey:SMTPFromKey];
+          }
+        }
+        
+        NSString* password = [MailApp SmtpPasswordForAccount:account];
+//        [_passwordField setStringValue:(password? password : @"")];
+        [NSUserDefaults.standardUserDefaults setObject:(password? password : @"") forKey:SMTPServerAuthPasswordKey];
+    } else {
+//        [_usernameField setStringValue:@""];
+//        [_passwordField setStringValue:@""];
+        [NSUserDefaults.standardUserDefaults setObject:@"" forKey:SMTPServerAuthUsernameKey];
+        [NSUserDefaults.standardUserDefaults setObject:@"" forKey:SMTPServerAuthPasswordKey];
+    }
+}
+
 @end
+
+
