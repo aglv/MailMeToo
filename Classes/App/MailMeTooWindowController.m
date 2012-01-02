@@ -7,7 +7,6 @@
 
 #import "MailMeTooWindowController.h"
 #import "SMTPClient.h"
-#import "Nitrogen/N2Debug.h"
 
 
 @implementation MailMeTooWindowController
@@ -51,7 +50,7 @@
 		[self setStatus:@"Sending..."];
 		[self performSelectorInBackground:@selector(_sendThread:) withObject:params];
 	} @catch (NSException* e) {
-		N2LogExceptionWithStackTrace(e);
+		NSLog(@"Send exception: %@", e.reason);
 		[self setStatus:e.reason];
 	}
 }

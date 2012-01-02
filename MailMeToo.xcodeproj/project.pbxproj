@@ -15,92 +15,15 @@
 		59E0BD51139FB38800477835 /* MailMeTooWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BD50139FB38800477835 /* MailMeTooWindowController.m */; };
 		59E0BD60139FB4EA00477835 /* EmailWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E0BD5E139FB4EA00477835 /* EmailWindow.xib */; };
 		59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
-		714CAF6413A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
-		714CAF6513A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
-		714CAF6613A669D900DAA5E5 /* Nitrogen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
-		714CAFB713A669DC00DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
-		714CAFB813A669DF00DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
-		714CAFB913A669E100DAA5E5 /* Nitrogen.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 714CAF6313A669D900DAA5E5 /* Nitrogen.framework */; };
 		71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
-		71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
 		71ACBDB713AC03AB004C8E22 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71ACBDB513AC03AB004C8E22 /* Preferences.xib */; };
 		71ACC2B613AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
 		71ACC2B713AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
-		71ACC2B813AC91D2004C8E22 /* MailApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC2B513AC91D2004C8E22 /* MailApp.m */; };
-		71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E1B3E913A663E40083323C /* MailMeTooTests.m */; };
-		71E1B42613A668750083323C /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* MailMeTooApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* MailMeTooApp.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5910DAA013A7A586009F7A62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Nitrogen;
-		};
-		5910DAE613A7A926009F7A62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Nitrogen;
-		};
-		597C8E6F13A746C800AABAD6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = Nitrogen;
-		};
-		597C8E7313A746C800AABAD6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 591403A21105B88A00D6A504;
-			remoteInfo = "Unit Tests";
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		595CA62C13A115C700A24CB2 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				714CAFB813A669DF00DAA5E5 /* Nitrogen.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		59E0BE43139FC21100477835 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				714CAFB713A669DC00DAA5E5 /* Nitrogen.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		714CAF0913A6696000DAA5E5 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				714CAFB913A669E100DAA5E5 /* Nitrogen.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Resources/App/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -113,7 +36,6 @@
 		29B97316FDCFA39411CA2CEA /* MailMeTooApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailMeTooApp.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nitrogen.xcodeproj; path = "../osirix-trunk/nitrogen/Nitrogen.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MailMeToo.growlView; sourceTree = BUILT_PRODUCTS_DIR; };
 		595CA48E13A0FF9900A24CB2 /* MailMeTooPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MailMeTooPlugin-Info.plist"; sourceTree = "<group>"; };
 		595CA52113A1025900A24CB2 /* GrowlDisplayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDisplayPlugin.h; sourceTree = "<group>"; };
@@ -129,15 +51,10 @@
 		59E0BE4C139FC41D00477835 /* SMTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClient.h; path = Classes/SMTPClient.h; sourceTree = "<group>"; };
 		59E0BE4D139FC41D00477835 /* SMTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMTPClient.m; path = Classes/SMTPClient.m; sourceTree = "<group>"; };
 		59EAC72213A25C480092BC07 /* GrowlDefinesInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDefinesInternal.h; sourceTree = "<group>"; };
-		714CAF6313A669D900DAA5E5 /* Nitrogen.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nitrogen.framework; path = "../osirix-trunk/nitrogen/build/Development/Nitrogen.framework"; sourceTree = SOURCE_ROOT; };
 		71ACBCEF13A951AD004C8E22 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		71ACBDB613AC03AB004C8E22 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Plugin/English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		71ACC2B413AC91D2004C8E22 /* MailApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailApp.h; path = Classes/MailApp.h; sourceTree = "<group>"; };
 		71ACC2B513AC91D2004C8E22 /* MailApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailApp.m; path = Classes/MailApp.m; sourceTree = "<group>"; };
-		71E1B3DE13A663370083323C /* MailMeTooTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MailMeTooTests-Info.plist"; sourceTree = "<group>"; };
-		71E1B3E813A663E40083323C /* MailMeTooTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooTests.h; path = Classes/Tests/MailMeTooTests.h; sourceTree = "<group>"; };
-		71E1B3E913A663E40083323C /* MailMeTooTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooTests.m; path = Classes/Tests/MailMeTooTests.m; sourceTree = "<group>"; };
-		71E1B41213A667DD0083323C /* MailMeToo.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MailMeToo.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* MailMeTooApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MailMeTooApp-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* MailMeToo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MailMeToo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -147,17 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				714CAF6413A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
 				71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71E1B40F13A667DD0083323C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				714CAF6613A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
-				71ACBCF213A951AD004C8E22 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +73,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				714CAF6513A669D900DAA5E5 /* Nitrogen.framework in Frameworks */,
 				71ACBCF113A951AD004C8E22 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,7 +114,6 @@
 			children = (
 				8D1107320486CEB800E47090 /* MailMeToo.app */,
 				595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */,
-				71E1B41213A667DD0083323C /* MailMeToo.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				595CA3FC13A0F91C00A24CB2 /* SMTPClient */,
-				71E1B3E713A663B30083323C /* Tests */,
 				595CA3EE13A0F8BE00A24CB2 /* App */,
 				595CA48C13A0FF5E00A24CB2 /* Growl Plugin */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -249,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				71ACBCEF13A951AD004C8E22 /* libiconv.dylib */,
-				714CAF6313A669D900DAA5E5 /* Nitrogen.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -271,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
-				71C4B65613A4A821008E5639 /* Other Sources */,
 			);
 			name = SMTPClient;
 			sourceTree = "<group>";
@@ -329,41 +231,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		597C8E6A13A746C800AABAD6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				597C8E7013A746C800AABAD6 /* Nitrogen.framework */,
-				597C8E7413A746C800AABAD6 /* Unit Tests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		71C4B65613A4A821008E5639 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		71E1B3E713A663B30083323C /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				71E1B3DE13A663370083323C /* MailMeTooTests-Info.plist */,
-				71E1B42313A668380083323C /* Classes */,
-			);
-			name = Tests;
-			sourceTree = "<group>";
-		};
-		71E1B42313A668380083323C /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				71E1B3E813A663E40083323C /* MailMeTooTests.h */,
-				71E1B3E913A663E40083323C /* MailMeTooTests.m */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -372,39 +239,16 @@
 			buildConfigurationList = 595CA48513A0FF2D00A24CB2 /* Build configuration list for PBXNativeTarget "MailMeToo Growl Plugin" */;
 			buildPhases = (
 				595CA47D13A0FF2C00A24CB2 /* Resources */,
-				595CA62C13A115C700A24CB2 /* Copy Frameworks */,
-				59EAC6E813A25BB70092BC07 /* Clean Nitrogen Headers */,
 				595CA47E13A0FF2C00A24CB2 /* Sources */,
 				595CA47F13A0FF2C00A24CB2 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				5910DAE713A7A926009F7A62 /* PBXTargetDependency */,
 			);
 			name = "MailMeToo Growl Plugin";
 			productName = "SMTPClient Growl Plugin";
 			productReference = 595CA48113A0FF2C00A24CB2 /* MailMeToo.growlView */;
-			productType = "com.apple.product-type.bundle";
-		};
-		71E1B41113A667DD0083323C /* MailMeToo Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "MailMeToo Tests" */;
-			buildPhases = (
-				71E1B40D13A667DD0083323C /* Resources */,
-				714CAF0913A6696000DAA5E5 /* Copy Frameworks */,
-				714CAF0B13A6696D00DAA5E5 /* Nitrogen A */,
-				71E1B40E13A667DD0083323C /* Sources */,
-				71E1B40F13A667DD0083323C /* Frameworks */,
-				71E1B41013A667DD0083323C /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "MailMeToo Tests";
-			productName = "SMTPClient Tests";
-			productReference = 71E1B41213A667DD0083323C /* MailMeToo.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8D1107260486CEB800E47090 /* MailMeToo App */ = {
@@ -412,15 +256,12 @@
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "MailMeToo App" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
-				59E0BE43139FC21100477835 /* Copy Frameworks */,
-				59EAC6E513A25B990092BC07 /* Clean Nitrogen Headers */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				5910DAA113A7A586009F7A62 /* PBXTargetDependency */,
 			);
 			name = "MailMeToo App";
 			productInstallPath = "$(HOME)/Applications";
@@ -445,37 +286,13 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* smtp */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 597C8E6A13A746C800AABAD6 /* Products */;
-					ProjectRef = 595CA30113A0DE1F00A24CB2 /* Nitrogen.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* MailMeToo App */,
 				595CA48013A0FF2C00A24CB2 /* MailMeToo Growl Plugin */,
-				71E1B41113A667DD0083323C /* MailMeToo Tests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		597C8E7013A746C800AABAD6 /* Nitrogen.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Nitrogen.framework;
-			remoteRef = 597C8E6F13A746C800AABAD6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		597C8E7413A746C800AABAD6 /* Unit Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Unit Tests.octest";
-			remoteRef = 597C8E7313A746C800AABAD6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		595CA47D13A0FF2C00A24CB2 /* Resources */ = {
@@ -483,13 +300,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				71ACBDB713AC03AB004C8E22 /* Preferences.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71E1B40D13A667DD0083323C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,64 +315,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		59EAC6E513A25B990092BC07 /* Clean Nitrogen Headers */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Clean Nitrogen Headers";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nrm -Rf ../Headers A/Headers\n";
-		};
-		59EAC6E813A25BB70092BC07 /* Clean Nitrogen Headers */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Clean Nitrogen Headers";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nrm -Rf ../Headers A/Headers\n";
-		};
-		714CAF0B13A6696D00DAA5E5 /* Nitrogen A */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Nitrogen A";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/Nitrogen.framework/Versions\"\nfind . -type d -maxdepth 1 -mindepth 1 | grep -v './A' | xargs rm -Rf\nrm Current\nln -s A Current\nrm -Rf ../Headers A/Headers";
-		};
-		71E1B41013A667DD0083323C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		595CA47E13A0FF2C00A24CB2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -572,16 +324,6 @@
 				595CA53D13A1025900A24CB2 /* MailMeTooPreferences.m in Sources */,
 				5910DC4813A7B36B009F7A62 /* SMTPClient.m in Sources */,
 				71ACC2B713AC91D2004C8E22 /* MailApp.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71E1B40E13A667DD0083323C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				71E1B42513A6686D0083323C /* MailMeTooTests.m in Sources */,
-				71E1B42613A668750083323C /* SMTPClient.m in Sources */,
-				71ACC2B813AC91D2004C8E22 /* MailApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,19 +340,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5910DAA113A7A586009F7A62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Nitrogen;
-			targetProxy = 5910DAA013A7A586009F7A62 /* PBXContainerItemProxy */;
-		};
-		5910DAE713A7A926009F7A62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Nitrogen;
-			targetProxy = 5910DAE613A7A926009F7A62 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
@@ -652,11 +381,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,7 +402,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MailMeToo;
-				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = growlView;
 			};
 			name = Debug;
@@ -687,11 +410,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -711,68 +429,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SMTPMail;
-				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = growlView;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		71E1B41413A667DE0083323C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "MailMeTooTests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = MailMeToo;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		71E1B41513A667DE0083323C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "MailMeTooTests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "MailMeToo Tests";
-				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -782,10 +439,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -803,10 +457,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../osirix-trunk/nitrogen/build/Development\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SMTPClientApp.pch;
@@ -850,15 +501,6 @@
 			buildConfigurations = (
 				595CA48313A0FF2D00A24CB2 /* Debug */,
 				595CA48413A0FF2D00A24CB2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		71E1B41613A667DE0083323C /* Build configuration list for PBXNativeTarget "MailMeToo Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				71E1B41413A667DE0083323C /* Debug */,
-				71E1B41513A667DE0083323C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
