@@ -9,7 +9,6 @@
 #import "MailMeTooPreferences.h"
 #import "GrowlApplicationNotification.h"
 #import "SMTPClient.h"
-#import "Nitrogen/N2Debug.h"
 
 
 @implementation MailMeTooDisplay
@@ -70,7 +69,7 @@
 		
 		[self performSelectorInBackground:@selector(sendThread:) withObject:params];
 	} @catch (NSException* e) {
-		N2LogExceptionWithStackTrace(e);
+		NSLog(@"Send exception: %@", e.reason);
 	}
 }
 
@@ -79,7 +78,7 @@
 	@try {
 		[SMTPClient send:params];
 	} @catch (NSException* e) {
-		N2LogExceptionWithStackTrace(e);
+		NSLog(@"Send exception: %@", e.reason);
 	} @finally {
 		[pool release];
 	}

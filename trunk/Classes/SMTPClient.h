@@ -40,8 +40,6 @@ typedef NSInteger SMTPClientTLSMode;
 @property(readonly,retain) NSString* username;
 @property(readonly,retain) NSString* password;
 
-+(NSString*)CramMD5:(NSString*)challengeString key:(NSString*)secretString;
-
 +(void)send:(NSDictionary*)params;
 
 +(SMTPClient*)clientWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
