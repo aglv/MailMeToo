@@ -13,7 +13,7 @@
 	<key>CFBundleName</key>
 	<string>MailMeToo</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
+	<string>1.1.0</string>
 	<key>CFBundlePackageType</key>
 	<string>DISP</string>
 	<key>CFBundleSignature</key>

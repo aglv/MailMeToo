@@ -9,16 +9,16 @@
 #import <iconv.h>
 #include <CommonCrypto/CommonDigest.h>
 
-const NSString* const SMTPServerAddressKey = @"SMTPServerAddress";
-const NSString* const SMTPServerPortsKey = @"SMTPServerPorts";
-const NSString* const SMTPServerTLSModeKey = @"SMTPServerTLSMode";
-const NSString* const SMTPFromKey = @"SMTPFrom";
-const NSString* const SMTPServerAuthFlagKey = @"SMTPServerAuthFlag";
-const NSString* const SMTPServerAuthUsernameKey = @"SMTPServerAuthUsername";
-const NSString* const SMTPServerAuthPasswordKey = @"SMTPServerAuthPassword";
-const NSString* const SMTPToKey = @"SMTPTo";
-const NSString* const SMTPSubjectKey = @"SMTPSubject";
-const NSString* const SMTPMessageKey = @"SMTPMessage";
+NSString* const SMTPServerAddressKey = @"SMTPServerAddress";
+NSString* const SMTPServerPortsKey = @"SMTPServerPorts";
+NSString* const SMTPServerTLSModeKey = @"SMTPServerTLSMode";
+NSString* const SMTPFromKey = @"SMTPFrom";
+NSString* const SMTPServerAuthFlagKey = @"SMTPServerAuthFlag";
+NSString* const SMTPServerAuthUsernameKey = @"SMTPServerAuthUsername";
+NSString* const SMTPServerAuthPasswordKey = @"SMTPServerAuthPassword";
+NSString* const SMTPToKey = @"SMTPTo";
+NSString* const SMTPSubjectKey = @"SMTPSubject";
+NSString* const SMTPMessageKey = @"SMTPMessage";
 
 @interface SMTPClient ()
 
@@ -136,22 +136,22 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	[super dealloc];
 }
 
-+(void)_splitAddress:(NSString*)address intoEmail:(NSString**)email description:(NSString**)desc {
++(void)splitAddress:(NSString*)address intoEmail:(NSString**)email description:(NSString**)desc {
 	NSInteger lti = [address rangeOfString:@"<" options:0].location;
 	NSInteger gti = [address rangeOfString:@">" options:NSBackwardsSearch].location;
 	if (lti != NSNotFound) {
 		if (gti != NSNotFound) {
 			if (lti < gti) {
-				*email = [[address substringWithRange:NSMakeRange(lti+1, gti-lti-1)] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-				*desc = [[address substringToIndex:MAX(0,lti-1)] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+				if (email) *email = [[address substringWithRange:NSMakeRange(lti+1, gti-lti-1)] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+				if (desc) *desc = [[address substringToIndex:MAX(0,lti-1)] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 			} else [NSException raise:NSInvalidArgumentException format:@"Invalid sender email address"];
 		} else [NSException raise:NSInvalidArgumentException format:@"Invalid sender email address"];
 	} else {
 		if (gti != NSNotFound)
 			[NSException raise:NSInvalidArgumentException format:@"Invalid sender email address"];
 		else {
-			*email = address;
-			*desc = nil;
+			if (email) *email = address;
+			if (desc) *desc = nil;
 		}
 	}
 }
@@ -171,14 +171,14 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSString* tempAddress;
 	NSString* tempLabel;
 	
-	[[self class] _splitAddress:from intoEmail:&tempAddress description:&tempLabel];
+	[[self class] splitAddress:from intoEmail:&tempAddress description:&tempLabel];
 	connector.from = tempAddress;
 	connector.fromDescription = tempLabel;
 	
 	NSMutableArray* to = [NSMutableArray array];
 	for (NSString* ito in [toAddresses componentsSeparatedByString:@","]) {
 		ito = [ito stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
-		[[self class] _splitAddress:ito intoEmail:&tempAddress description:&tempLabel];
+		[[self class] splitAddress:ito intoEmail:&tempAddress description:&tempLabel];
 		[to addObject:[NSArray arrayWithObjects: tempAddress, tempLabel, nil]];
 	}
 	
@@ -200,8 +200,6 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 
 @property(retain) NSInputStream* istream;
 @property(retain) NSOutputStream* ostream;
-@property(retain) NSConditionLock* lock;
-@property(retain) NSThread* launchThread;
 @property NSUInteger maximumReadSizePerEvent;
 @property NSInteger connectionStatus;
 
@@ -234,8 +232,6 @@ const NSString* const SMTPMessageKey = @"SMTPMessage";
 
 @synthesize istream = _istream;
 @synthesize ostream = _ostream;
-@synthesize lock = _lock;
-@synthesize launchThread = _launchThread;
 @synthesize maximumReadSizePerEvent = _maximumReadSizePerEvent;
 @synthesize connectionStatus = _connectionStatus;
 
@@ -254,6 +250,8 @@ enum {
     if ((self = [super init])) {
         _ibuffer = [[NSMutableData alloc] init];
         _obuffer = [[NSMutableData alloc] init];
+        _launchThread = [NSThread currentThread];
+        _lock = [[NSConditionLock alloc] initWithCondition:0]; 
     }
     
     return self;
@@ -267,8 +265,6 @@ enum {
             
             // [NSConnection sendSynchronousRequest:nil toAddress:self.address port:portNumber tls:NO dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
             
-            _lock = [[NSConditionLock alloc] initWithCondition:0]; 
-            self.launchThread = NSThread.currentThread;
             NSMutableArray* io = [NSMutableArray arrayWithObjects: port, nil];
             
             NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(synchronousSmtpConnectionThread:) object:io];
@@ -276,7 +272,6 @@ enum {
             [_lock lockWhenCondition:1];
             
             [_lock unlock];
-            [_lock release];
             [thread release];
             
             id response = io.count? [io lastObject] : nil;
@@ -310,8 +305,9 @@ enum {
         [_istream open];
 		[_ostream open];
         
-        while (self.connectionStatus != ConnectionStatusClosed && !self.launchThread.isCancelled) {
+        while (self.connectionStatus != ConnectionStatusClosed && !_launchThread.isCancelled) {
 			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+            [NSThread sleepForTimeInterval:0.01];
 		}
 
     } @catch (NSException* e) {
@@ -325,8 +321,8 @@ enum {
 
 -(void)stream:(NSStream*)stream handleEvent:(NSStreamEvent)event {
 	//#ifdef DEBUG
-    //	NSString* NSEventName[] = {@"NSStreamEventNone", @"NSStreamEventOpenCompleted", @"NSStreamEventHasBytesAvailable", @"NSStreamEventHasSpaceAvailable", @"NSStreamEventErrorOccurred", @"NSStreamEventEndEncountered"};
-    //	NSLog(@"%@ stream:%@ handleEvent:%@", self, stream, NSEventName[(int)log2(event)+1]);
+    	NSString* NSEventName[] = {@"NSStreamEventNone", @"NSStreamEventOpenCompleted", @"NSStreamEventHasBytesAvailable", @"NSStreamEventHasSpaceAvailable", @"NSStreamEventErrorOccurred", @"NSStreamEventEndEncountered"};
+    	NSLog(@"%@ stream:%@ handleEvent:%@", self, stream, NSEventName[(int)log2(event)+1]);
 	//#endif
 	
 	if (event == NSStreamEventOpenCompleted)
@@ -416,6 +412,7 @@ enum {
 	self.to = nil;
     [_ibuffer release];
     [_obuffer release];
+    [_lock release];
 	[super dealloc];
 }
 
@@ -447,8 +444,6 @@ enum SMTPSubstatuses {
 	[_obuffer setLength:0];
     _connectionStatus = ConnectionStatusClosed;
     _isTLS = NO;
-    self.lock = nil;
-    self.launchThread = nil;
 	self.status = InitialStatus;
 	self.authModes = nil;
 	self.canStartTLS = NO;

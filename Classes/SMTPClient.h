@@ -8,16 +8,16 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern const NSString* const SMTPServerAddressKey;
-extern const NSString* const SMTPServerPortsKey;
-extern const NSString* const SMTPServerTLSModeKey;
-extern const NSString* const SMTPFromKey;
-extern const NSString* const SMTPServerAuthFlagKey;
-extern const NSString* const SMTPServerAuthUsernameKey;
-extern const NSString* const SMTPServerAuthPasswordKey;
-extern const NSString* const SMTPToKey;
-extern const NSString* const SMTPSubjectKey;
-extern const NSString* const SMTPMessageKey;
+extern NSString* const SMTPServerAddressKey;
+extern NSString* const SMTPServerPortsKey;
+extern NSString* const SMTPServerTLSModeKey;
+extern NSString* const SMTPFromKey;
+extern NSString* const SMTPServerAuthFlagKey;
+extern NSString* const SMTPServerAuthUsernameKey;
+extern NSString* const SMTPServerAuthPasswordKey;
+extern NSString* const SMTPToKey;
+extern NSString* const SMTPSubjectKey;
+extern NSString* const SMTPMessageKey;
 
 enum {
 	SMTPClientTLSModeNone = 0,
@@ -43,6 +43,8 @@ typedef NSInteger SMTPClientTLSMode;
 +(void)send:(NSDictionary*)params;
 
 +(SMTPClient*)clientWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
+
++(void)splitAddress:(NSString*)address intoEmail:(NSString**)email description:(NSString**)desc;
 
 -(id)initWithServerAddress:(NSString*)address ports:(NSArray*)ports tlsMode:(SMTPClientTLSMode)tlsMode username:(NSString*)authUsername password:(NSString*)authPassword;
 

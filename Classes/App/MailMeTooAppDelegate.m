@@ -27,8 +27,6 @@
 								 // nil, SMTPMessageKey,
 								  NULL];
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-		
-		NSLog(@"Accounts: %@", [MailApp SmtpAccounts]);
 	}
 	
 	return self;
