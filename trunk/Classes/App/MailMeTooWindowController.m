@@ -11,16 +11,49 @@
 
 @implementation MailMeTooWindowController
 
+static NSString* MailMeTooWindowControllerTestPasswordContext = @"MailMeTooWindowControllerTestPasswordContext";
+
 -(id)init {
-	return [super initWithWindowNibName:@"EmailWindow" owner:self];
+	if ((self = [super initWithWindowNibName:@"EmailWindow" owner:self])) {
+//      [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:SMTPServerAddressKey options:0 context:MailMeTooWindowControllerTestPasswordContext];
+//      [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:SMTPServerPortsKey options:0 context:MailMeTooWindowControllerTestPasswordContext];
+//      [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:SMTPServerTLSModeKey options:0 context:MailMeTooWindowControllerTestPasswordContext];
+//      [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:SMTPServerAuthFlagKey options:0 context:MailMeTooWindowControllerTestPasswordContext];
+//      [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:SMTPServerAuthUsernameKey options:0 context:MailMeTooWindowControllerTestPasswordContext];
+    }
+    
+    return self;
 }
+
+-(void)dealloc {
+//  [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:SMTPServerAddressKey];
+//  [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:SMTPServerPortsKey];
+//  [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:SMTPServerTLSModeKey];
+//  [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:SMTPServerAuthFlagKey];
+//  [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:SMTPServerAuthUsernameKey];
+    [super dealloc];
+}
+
+//-(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context {
+//    if (context == MailMeTooWindowControllerTestPasswordContext) {
+//    } else [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+//}
 
 -(void)awakeFromNib {
 	[self setStatus:nil];
+    NSString* password = [MailApp SmtpPasswordForAccount:[NSDictionary dictionaryWithObjectsAndKeys: 
+                                                          [_addressField stringValue], SMTPServerAddressKey,
+                                                          [_usernameField stringValue], SMTPServerAuthUsernameKey, NULL]];
+    if (password)
+        [_passwordField setStringValue:password];
 }
 
 -(void)setStatus:(NSString*)str {
 	[_statusField setStringValue: str? str : @"" ];
+}
+
+-(IBAction)setPassword:(id)sender {
+    
 }
 
 -(IBAction)sendAction:(id)sender {
@@ -42,8 +75,7 @@
 							[_passwordField stringValue], SMTPServerAuthPasswordKey,
 							[_toField stringValue], SMTPToKey,
 							[_subjectField stringValue], SMTPSubjectKey,
-							[_messageField stringValue], SMTPMessageKey,
-							NULL];
+							[_messageField stringValue], SMTPMessageKey, NULL];
 							
 	NSLog(@"Go with %@", params);
 	@try {
@@ -75,7 +107,7 @@
 //    NSLog(@"Accounts: %@", accounts);
     for (NSString* name in accounts) {
         NSDictionary* account = [accounts objectForKey:name];
-        NSMenuItem* mi = [[NSMenuItem alloc] initWithTitle:name action:@selector(selectMailAppAccount:) keyEquivalent:@""];
+        NSMenuItem* mi = [[[NSMenuItem alloc] initWithTitle:name action:@selector(selectMailAppAccount:) keyEquivalent:@""] autorelease];
         mi.target = self;
         mi.representedObject = account;
         [menu addItem:mi];
@@ -116,8 +148,8 @@
         }
         
         NSString* password = [MailApp SmtpPasswordForAccount:account];
-//        [_passwordField setStringValue:(password? password : @"")];
-        [NSUserDefaults.standardUserDefaults setObject:(password? password : @"") forKey:SMTPServerAuthPasswordKey];
+        [_passwordField setStringValue:(password? password : @"")];
+//        [NSUserDefaults.standardUserDefaults setObject:(password? password : @"") forKey:SMTPServerAuthPasswordKey];
     } else {
 //        [_usernameField setStringValue:@""];
 //        [_passwordField setStringValue:@""];

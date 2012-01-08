@@ -15,6 +15,8 @@
 		59E0BD51139FB38800477835 /* MailMeTooWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BD50139FB38800477835 /* MailMeTooWindowController.m */; };
 		59E0BD60139FB4EA00477835 /* EmailWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E0BD5E139FB4EA00477835 /* EmailWindow.xib */; };
 		59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E0BE4D139FC41D00477835 /* SMTPClient.m */; };
+		7108B1A214B50ABD008894A1 /* IsNonEmptyString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7108B1A114B50ABD008894A1 /* IsNonEmptyString.m */; };
+		7108B1A314B50ABD008894A1 /* IsNonEmptyString.m in Sources */ = {isa = PBXBuildFile; fileRef = 7108B1A114B50ABD008894A1 /* IsNonEmptyString.m */; };
 		714F149D14B23D8F00930F6A /* MMTPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 714F149C14B23D8F00930F6A /* MMTPopUpButtonCell.m */; };
 		714F149E14B23D8F00930F6A /* MMTPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 714F149C14B23D8F00930F6A /* MMTPopUpButtonCell.m */; };
 		71ACBCF013A951AD004C8E22 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71ACBCEF13A951AD004C8E22 /* libiconv.dylib */; };
@@ -55,7 +57,9 @@
 		59E0BE4C139FC41D00477835 /* SMTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMTPClient.h; path = Classes/SMTPClient.h; sourceTree = "<group>"; };
 		59E0BE4D139FC41D00477835 /* SMTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMTPClient.m; path = Classes/SMTPClient.m; sourceTree = "<group>"; };
 		59EAC72213A25C480092BC07 /* GrowlDefinesInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlDefinesInternal.h; sourceTree = "<group>"; };
-		714F149B14B23D8F00930F6A /* MMTPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; name = MMTPopUpButtonCell.h; path = Classes/MMTPopUpButtonCell.h; sourceTree = "<group>"; };
+		7108B1A014B50ABD008894A1 /* IsNonEmptyString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IsNonEmptyString.h; path = Classes/IsNonEmptyString.h; sourceTree = "<group>"; };
+		7108B1A114B50ABD008894A1 /* IsNonEmptyString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IsNonEmptyString.m; path = Classes/IsNonEmptyString.m; sourceTree = "<group>"; };
+		714F149B14B23D8F00930F6A /* MMTPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMTPopUpButtonCell.h; path = Classes/MMTPopUpButtonCell.h; sourceTree = "<group>"; };
 		714F149C14B23D8F00930F6A /* MMTPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMTPopUpButtonCell.m; path = Classes/MMTPopUpButtonCell.m; sourceTree = "<group>"; };
 		71ACBCEF13A951AD004C8E22 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		71ACBDB613AC03AB004C8E22 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Plugin/English.lproj/Preferences.xib; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				71ACC2B513AC91D2004C8E22 /* MailApp.m */,
 				714F149B14B23D8F00930F6A /* MMTPopUpButtonCell.h */,
 				714F149C14B23D8F00930F6A /* MMTPopUpButtonCell.m */,
+				7108B1A014B50ABD008894A1 /* IsNonEmptyString.h */,
+				7108B1A114B50ABD008894A1 /* IsNonEmptyString.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 				5910DC4813A7B36B009F7A62 /* SMTPClient.m in Sources */,
 				71ACC2B713AC91D2004C8E22 /* MailApp.m in Sources */,
 				714F149E14B23D8F00930F6A /* MMTPopUpButtonCell.m in Sources */,
+				7108B1A314B50ABD008894A1 /* IsNonEmptyString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +360,7 @@
 				59E0BE4E139FC41D00477835 /* SMTPClient.m in Sources */,
 				71ACC2B613AC91D2004C8E22 /* MailApp.m in Sources */,
 				714F149D14B23D8F00930F6A /* MMTPopUpButtonCell.m in Sources */,
+				7108B1A214B50ABD008894A1 /* IsNonEmptyString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

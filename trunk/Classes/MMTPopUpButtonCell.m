@@ -11,7 +11,7 @@
 @implementation MMTPopUpButtonCell
 
 -(NSRect)drawTitle:(NSAttributedString*)title withFrame:(NSRect)frame inView:(NSView*)controlView {
-    title = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Clone an SMTP account...", nil) attributes:[title attributesAtIndex:0 effectiveRange:NULL]];
+    title = [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Clone an SMTP account...", nil) attributes:[title attributesAtIndex:0 effectiveRange:NULL]] autorelease];
     return [super drawTitle:title withFrame:frame inView:controlView];
 }
 

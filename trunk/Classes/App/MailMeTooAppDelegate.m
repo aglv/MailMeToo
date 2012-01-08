@@ -33,10 +33,8 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification {
-	
 	MailMeTooWindowController* ewc = [MailMeTooWindowController new];
 	[ewc.window makeKeyAndOrderFront:self];
-	
 }
 
 @end

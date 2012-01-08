@@ -41,17 +41,14 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
     // connection
 	NSInputStream* _istream;
     NSOutputStream* _ostream;
-    NSConditionLock* _lock;
-    NSThread* _launchThread;
-    NSUInteger _maximumReadSizePerEvent;
     NSUInteger _handleOpenCompleted;
     NSInteger _connectionStatus;
     NSMutableData* _ibuffer;
     NSMutableData* _obuffer;
     BOOL _isTLS;
     // smtp
-	NSInteger _status;
-	NSInteger _substatus;
+	NSInteger _smtpStatus;
+	NSInteger _smtpSubstatus;
 	NSArray* _authModes;
 	NSTimer* _dataTimeoutTimer;
 	NSInteger _rcptToCount;
@@ -129,6 +126,7 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 }
 
 -(void)dealloc {
+    NSLog(@"SMTPClient dealloc");
 	self.address = nil;
 	self.ports = nil;
 	self.username = nil;
@@ -163,7 +161,7 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSHost* host = [NSHost hostWithName:self.address];
 	if (!host) [NSException raise:NSInvalidArgumentException format:@"Invalid server address"];
 		
-	_SMTPConnector* connector = [[_SMTPConnector new] autorelease];
+	_SMTPConnector* connector = [[_SMTPConnector new] autorelease]; // TODO: release
     connector.client = self;
 	connector.message = message;
 	connector.subject = subject;
@@ -184,7 +182,7 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 	
 	connector.to = to;
 	
-	[connector start];
+	[connector performSelectorInBackground:@selector(start) withObject:nil];
 }
 
 @end
@@ -200,11 +198,10 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 
 @property(retain) NSInputStream* istream;
 @property(retain) NSOutputStream* ostream;
-@property NSUInteger maximumReadSizePerEvent;
 @property NSInteger connectionStatus;
 
-@property(nonatomic) NSInteger status;
-@property NSInteger substatus;
+@property(nonatomic) NSInteger smtpStatus;
+@property NSInteger smtpSubstatus;
 @property(retain) NSArray* authModes;
 @property BOOL canStartTLS;
 @property NSInteger rcptToCount;
@@ -212,12 +209,13 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 
 +(NSString*)CramMD5:(NSString*)challengeString key:(NSString*)secretString;
 
--(void)handleData;
+-(void)handleData:(NSMutableData*)data;
 -(void)trySendingDataNow;
--(void)writeData:(NSDate*)data;
+-(void)writeData:(NSData*)data;
 
 -(void)startTLS;
--(void)reset;
+
+-(void)handleLine:(NSString*)line;
 
 @end
 
@@ -232,11 +230,10 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 
 @synthesize istream = _istream;
 @synthesize ostream = _ostream;
-@synthesize maximumReadSizePerEvent = _maximumReadSizePerEvent;
 @synthesize connectionStatus = _connectionStatus;
 
-@synthesize status = _status;
-@synthesize substatus = _substatus;
+@synthesize smtpStatus = _smtpStatus;
+@synthesize smtpSubstatus = _smtpSubstatus;
 @synthesize authModes = _authModes;
 @synthesize canStartTLS = _canStartTLS;
 @synthesize rcptToCount = _rcptToCount;
@@ -250,8 +247,6 @@ enum {
     if ((self = [super init])) {
         _ibuffer = [[NSMutableData alloc] init];
         _obuffer = [[NSMutableData alloc] init];
-        _launchThread = [NSThread currentThread];
-        _lock = [[NSConditionLock alloc] initWithCondition:0]; 
     }
     
     return self;
@@ -261,27 +256,28 @@ enum {
     NSException* exception = nil;
 	for (NSNumber* port in self.client.ports) {
 		@try {
-			[self reset];
+            self.connectionStatus = ConnectionStatusConnecting;
             
-            // [NSConnection sendSynchronousRequest:nil toAddress:self.address port:portNumber tls:NO dataHandlerTarget:self selector:@selector(_connection:handleData:context:) context:context];
+            [NSStream getStreamsToHost:[NSHost hostWithName:self.client.address] port:port.integerValue inputStream:&_istream outputStream:&_ostream];
+            [_istream retain];
+            [_ostream retain];
+            [_istream setDelegate:self];
+            [_ostream setDelegate:self];
+            [_istream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+            [_ostream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+            [_istream open];
+            [_ostream open];
             
-            NSMutableArray* io = [NSMutableArray arrayWithObjects: port, nil];
-            
-            NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(synchronousSmtpConnectionThread:) object:io];
-            [thread start];
-            [_lock lockWhenCondition:1];
-            
-            [_lock unlock];
-            [thread release];
-            
-            id response = io.count? [io lastObject] : nil;
-            if ([response isKindOfClass:[NSException class]])
-                @throw response;
+            while (self.connectionStatus != ConnectionStatusClosed/* && !_launchThread.isCancelled*/) {
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+                //            [NSThread sleepForTimeInterval:0.01];
+            }
 			
             exception = nil;
 			break;
 		} @catch (NSException* e) {
-			exception = e;
+			NSLog(@"SMTP Exception: %@", e.reason);
+            exception = e;
 		}
 	}
     
@@ -289,168 +285,158 @@ enum {
 		@throw exception;
 }
 
--(void)synchronousSmtpConnectionThread:(NSMutableArray*)io {
-	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    @try {
-		NSInteger port = [[io objectAtIndex:0] integerValue];
-        
-        self.connectionStatus = ConnectionStatusConnecting;
-        [NSStream getStreamsToHost:[NSHost hostWithName:self.client.address] port:port inputStream:&_istream outputStream:&_ostream];
-        [_istream retain];
-        [_ostream retain];
-		[_istream setDelegate:self];
-		[_ostream setDelegate:self];
-		[_istream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-		[_ostream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [_istream open];
-		[_ostream open];
-        
-        while (self.connectionStatus != ConnectionStatusClosed && !_launchThread.isCancelled) {
-			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-            [NSThread sleepForTimeInterval:0.01];
-		}
-
-    } @catch (NSException* e) {
-		[io addObject:e];
-    } @finally {
-        [pool release];
-		[_lock lockWhenCondition:0];
-		[_lock unlockWithCondition:1];
-    }
-}
-
 -(void)stream:(NSStream*)stream handleEvent:(NSStreamEvent)event {
 	//#ifdef DEBUG
     	NSString* NSEventName[] = {@"NSStreamEventNone", @"NSStreamEventOpenCompleted", @"NSStreamEventHasBytesAvailable", @"NSStreamEventHasSpaceAvailable", @"NSStreamEventErrorOccurred", @"NSStreamEventEndEncountered"};
-    	NSLog(@"%@ stream:%@ handleEvent:%@", self, stream, NSEventName[(int)log2(event)+1]);
+    	NSLog(@"%@ stream:handleEvent:%@", NSEventName[(int)log2(event)+1], [stream className]);
 	//#endif
 	
 	if (event == NSStreamEventOpenCompleted)
 		if (++_handleOpenCompleted == 2) {
 			self.connectionStatus = ConnectionStatusOk;
-            self.dataTimeoutTimer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:0 target:self selector:@selector(_dataTimeoutCallback:) userInfo:nil repeats:NO];
+            self.dataTimeoutTimer = [[[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:0 target:self selector:@selector(_dataTimeoutCallback:) userInfo:nil repeats:NO] autorelease];
             [[NSRunLoop currentRunLoop] addTimer:self.dataTimeoutTimer forMode:NSDefaultRunLoopMode];
-
 		}
 	
 	if (stream == _istream && event == NSStreamEventHasBytesAvailable) {
 		// DLog(@"%@ has bytes available", self);
-		NSUInteger readSizeForThisEvent = 0;
-		while (!_maximumReadSizePerEvent || readSizeForThisEvent < _maximumReadSizePerEvent) {
+		while (YES) {
 			NSUInteger maxLength = 2048;
-			if (_maximumReadSizePerEvent && maxLength > _maximumReadSizePerEvent-readSizeForThisEvent)
-				maxLength = _maximumReadSizePerEvent-readSizeForThisEvent;
 			uint8_t buffer[maxLength];
 			NSInteger length = [_istream read:buffer maxLength:maxLength];
 			
 			if (length > 0) {
-				// DLog(@"%@ Read %d Bytes", self, length);
+//				NSLog(@"Read %d bytes", length);
 				//				std::cerr << [[NSString stringWithFormat:@"%@ Read %d Bytes", self, length] UTF8String] << ": ";
 				//				for (int i = 0; i < length; ++i)
 				//					std::cerr << (int)buffer[i] << " ";
 				//				std::cerr << std::endl;
-				readSizeForThisEvent += length;
 				[_ibuffer appendBytes:buffer length:length];
+                
+                [self handleData:_ibuffer];
+                
+                if (length < maxLength)
+                    break;
 			} else
 				break;
-			
-			[self handleData];
 		}
 		
-		if (readSizeForThisEvent == _maximumReadSizePerEvent)
-			[self performSelector:@selector(streamHandleEvent:) withObject:[NSArray arrayWithObjects:stream, [NSNumber numberWithUnsignedInteger:event], nil] afterDelay:0];
 	}
 	
-	if (stream == _ostream && event == NSStreamEventHasSpaceAvailable && [_obuffer length])
-		[self performSelector:@selector(trySendingDataNow) withObject:nil afterDelay:0];
+	if (stream == _ostream && event == NSStreamEventHasSpaceAvailable && [_obuffer length]) {
+		if (_isTLS && self.connectionStatus == ConnectionStatusConnecting)
+            self.connectionStatus = ConnectionStatusOk;
+        [self performSelector:@selector(trySendingDataNow) withObject:nil afterDelay:0];
+    }
 	
 	if (event == NSStreamEventEndEncountered) {
 		[stream close];
-        [self reset];
+        self.connectionStatus = ConnectionStatusClosed;
     }
 	
 	if (event == NSStreamEventErrorOccurred) {
 		NSLog(@"Stream error: %@", stream.streamError.localizedDescription);
-		[self reset];
+        self.connectionStatus = ConnectionStatusClosed;
 	}
 }
 
--(void)streamHandleEvent:(NSArray*)io {
-	[self stream:[io objectAtIndex:0] handleEvent:[[io objectAtIndex:1] unsignedIntegerValue]];
+-(void)handleData:(NSMutableData*)data {
+	if (self.dataTimeoutTimer) {
+		[self.dataTimeoutTimer invalidate];
+		self.dataTimeoutTimer = nil;
+	}
+	
+	char* datap = (char*)data.bytes;
+	NSInteger datal = data.length, datalused = 0;
+	
+	while (datal > 0) {
+		char* p = strnstr(datap, "\r\n", datal);
+		if (!p) break;
+		size_t l = p-datap;
+		
+		if (l) {
+			NSString* line = [[NSString alloc] initWithBytesNoCopy:datap length:l encoding:NSUTF8StringEncoding freeWhenDone:NO];
+			[self handleLine:line];
+			[line release];
+		}
+		
+		l += 2;
+		datap += l;
+		datal -= l;
+		datalused += l;
+	}
+    
+    if (datalused)
+        [data replaceBytesInRange:NSMakeRange(0, datalused) withBytes:nil length:0];
 }
 
 -(void)writeData:(NSData*)data {
 	[_obuffer appendData:data];
 	if (self.connectionStatus == ConnectionStatusOk)	
 		[self trySendingDataNow];
-	// the output buffer is sent every 0.01 seconds - that's quick enough, otherwise [self transferData:NULL];
 }
 
 -(void)trySendingDataNow {
-	NSUInteger length = [_obuffer length];
-	if (length) {
-		NSUInteger sentLength = [_ostream write:(uint8_t*)[_obuffer bytes] maxLength:length];
+	NSUInteger length = _obuffer.length;
+	if (length && self.connectionStatus == ConnectionStatusOk) {
+		NSUInteger sentLength = [_ostream write:(uint8_t*)_obuffer.bytes maxLength:length];
 		if (sentLength != -1) {
 			[_obuffer replaceBytesInRange:NSMakeRange(0,sentLength) withBytes:nil length:0];
+//            NSLog(@"Sent %d bytes", sentLength);
 		} else
 			NSLog(@"%@ Send error: %@", self, _ostream.streamError.localizedDescription);
 	}
 }
 
--(void)setStatus:(NSInteger)status {
-	_status = status;
-	self.substatus = 0;
-}
-
 -(void)dealloc {
-	[self reset];
+    NSLog(@"_SMTPConnector dealloc");
+    
+    [self.ostream close];
+    [self.istream close];
+    [self.ostream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.istream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    self.ostream = nil;
+    self.istream = nil;
+    
+//    _handleOpenCompleted = 0;
+//	[_ibuffer setLength:0];
+//	[_obuffer setLength:0];
+//    _connectionStatus = ConnectionStatusClosed;
+//    _isTLS = NO;
+//	self.status = InitialStatus;
+	self.authModes = nil;
+//	self.canStartTLS = NO;
+//	self.rcptToCount = 0;
+    
+	[self.dataTimeoutTimer invalidate];
+	self.dataTimeoutTimer = nil;
+    
     self.client = nil;
 	self.message = nil;
 	self.subject = nil;
 	self.from = nil;
 	self.fromDescription = nil;
 	self.to = nil;
+    
     [_ibuffer release];
     [_obuffer release];
-    [_lock release];
 	[super dealloc];
 }
 
-enum SMTPStatuses {
-	InitialStatus = 0,
-	StatusHELO,
-	StatusEHLO,
-	StatusSTARTTLS,
-	StatusAUTH,
-	StatusMAIL,
-	StatusRCPT,
-	StatusDATA,
-	StatusQUIT
-};
-
-enum SMTPSubstatuses {
-	PlainAUTH = 1,
-	LoginAUTH,
-	CramMD5AUTH
-};
-
--(void)reset {
-    [self.ostream close];
-    [self.istream close];
-    self.ostream = nil;
-    self.istream = nil;
-    _handleOpenCompleted = 0;
-	[_ibuffer setLength:0];
-	[_obuffer setLength:0];
-    _connectionStatus = ConnectionStatusClosed;
-    _isTLS = NO;
-	self.status = InitialStatus;
-	self.authModes = nil;
-	self.canStartTLS = NO;
-	self.rcptToCount = 0;
-	[self.dataTimeoutTimer invalidate];
-	self.dataTimeoutTimer = nil;
+-(void)startTLS {
+    NSLog(@"StartTLS with %@", self.client.address);
+    NSMutableDictionary* settings = [NSMutableDictionary dictionary];
+    self.connectionStatus = ConnectionStatusConnecting;
+    [settings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString*)kCFStreamSSLLevel];
+    [settings setObject:self.client.address forKey:(NSString*)kCFStreamSSLPeerName];
+    [_istream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
+    [_ostream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
+    [_istream open];
+    [_ostream open];
+    _isTLS = YES;
 }
+
+#pragma mark SMTP
 
 +(NSString*)CramMD5:(NSString*)challengeString key:(NSString*)secretString {
 	unsigned char ipad[64], opad[64];
@@ -474,47 +460,76 @@ enum SMTPSubstatuses {
 	return [[r1 md5] hex];
 }
 
--(void)_writeLine:(id)line {
-	if ([line isKindOfClass:NSString.class])
-		line = [line dataUsingEncoding:NSUTF8StringEncoding];
-	[self writeData:line];
-	[self writeData:[NSData dataWithBytesNoCopy:(void*)"\r\n" length:2 freeWhenDone:NO]];
-}
-
 +(NSString*)_hostname {
 	char hostname[128];
 	gethostname(hostname, 127);
 	hostname[127] = 0;
-	return [NSString stringWithCString:hostname encoding:NSUTF8StringEncoding];
+	NSString* string = [NSString stringWithCString:hostname encoding:NSUTF8StringEncoding];
+    if (![string rangeOfString:@"."].length) string = [string stringByAppendingString:@".local"];
+    return string;
+}
+
+enum SMTPStatuses {
+	InitialStatus = 0,
+	StatusHELO,
+	StatusEHLO,
+	StatusSTARTTLS,
+	StatusAUTH,
+	StatusMAIL,
+	StatusRCPT,
+	StatusDATA,
+	StatusQUIT
+};
+
+enum SMTPSubstatuses {
+	PlainAUTH = 1,
+	LoginAUTH,
+	CramMD5AUTH
+};
+
+-(void)writeLine:(id)line {
+    NSLog(@"-> %@", line);
+    if ([line isKindOfClass:[NSString class]])
+        line = [line dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableData* data = [[line mutableCopy] autorelease];
+    [data appendBytes:"\r\n" length:2];
+    
+	[self writeData:data];
+}
+
+-(void)setSmtpStatus:(NSInteger)smtpStatus {
+	_smtpStatus = smtpStatus;
+	self.smtpSubstatus = 0;
 }
 
 -(void)_ehlo {
-	[self _writeLine:[@"EHLO " stringByAppendingString:[[self class] _hostname]]];
-	self.status = StatusEHLO;
+	[self writeLine:[@"EHLO " stringByAppendingString:[[self class] _hostname]]];
+	self.smtpStatus = StatusEHLO;
 }
 
 -(void)_mail {
 	NSString* from = [NSString stringWithFormat:@"<%@>", self.from];
-	[self _writeLine:[@"MAIL FROM: " stringByAppendingString:from]];
-	self.status = StatusMAIL;
+	[self writeLine:[@"MAIL FROM: " stringByAppendingString:from]];
+	self.smtpStatus = StatusMAIL;
 }
 
 -(void)_auth {
 	if (self.client.username && self.client.password) {
 		if ([self.authModes containsObject:@"CRAM-MD5"]) {
-			[self _writeLine:@"AUTH CRAM-MD5"];
-			self.status = StatusAUTH;
-			self.substatus = CramMD5AUTH;
+			[self writeLine:@"AUTH CRAM-MD5"];
+			self.smtpStatus = StatusAUTH;
+			self.smtpSubstatus = CramMD5AUTH;
 		}
 		else if ([self.authModes containsObject:@"PLAIN"]) {
-			[self _writeLine:[@"AUTH PLAIN " stringByAppendingString:[[[NSString stringWithFormat:@"%@\0%@\0%@", self.client.username, self.client.username, self.client.password] dataUsingEncoding:NSUTF8StringEncoding] base64]]];
-			self.status = StatusAUTH;
-			self.substatus = PlainAUTH;
+			[self writeLine:[@"AUTH PLAIN " stringByAppendingString:[[[NSString stringWithFormat:@"%@\0%@\0%@", self.client.username, self.client.username, self.client.password] dataUsingEncoding:NSUTF8StringEncoding] base64]]];
+			self.smtpStatus = StatusAUTH;
+			self.smtpSubstatus = PlainAUTH;
 		}
 		else if ([self.authModes containsObject:@"LOGIN"]) {
-			[self _writeLine:@"AUTH LOGIN"];
-			self.status = StatusAUTH;
-			self.substatus = LoginAUTH;
+			[self writeLine:@"AUTH LOGIN"];
+			self.smtpStatus = StatusAUTH;
+			self.smtpSubstatus = LoginAUTH;
 		}
 		else [NSException raise:NSGenericException format:@"The server doesn't allow any authentication techniques supported by this client."];
 	} else
@@ -527,7 +542,7 @@ enum SMTPSubstatuses {
 	if (code >= 500)
 		[NSException raise:NSGenericException format:@"Error %d: %@", code, message];
 	
-	switch (self.status) {
+	switch (self.smtpStatus) {
 		case InitialStatus: {
 			switch (code) {
 				case 220:
@@ -535,8 +550,8 @@ enum SMTPSubstatuses {
 						[self _ehlo];
 						return;
 					} else {
-						[self _writeLine:[@"HELO " stringByAppendingString:[[self class] _hostname]]];
-						self.status = StatusHELO;
+						[self writeLine:[@"HELO " stringByAppendingString:[[self class] _hostname]]];
+						self.smtpStatus = StatusHELO;
 						return;
 					}
 			}
@@ -557,8 +572,8 @@ enum SMTPSubstatuses {
 					} else
 						if (!_isTLS && self.client.tlsMode) {
 							if (self.canStartTLS) {
-								[self _writeLine:@"STARTTLS"];
-								self.status = StatusSTARTTLS;
+								[self writeLine:@"STARTTLS"];
+								self.smtpStatus = StatusSTARTTLS;
 							} else if (self.client.tlsMode == SMTPClientTLSModeTLSOrClose)
 								[NSException raise:NSGenericException format:@"Server doesn't support STARTTLS"];
 							else { // TLSIfPossible, not possible...
@@ -577,7 +592,7 @@ enum SMTPSubstatuses {
 			}
 		} break;
 		case StatusAUTH: {
-			switch (self.substatus) {
+			switch (self.smtpSubstatus) {
 				case PlainAUTH:
 					switch (code) {
 						case 235:
@@ -589,10 +604,10 @@ enum SMTPSubstatuses {
 						case 334:
 							message = [[[NSString alloc] initWithData:[NSData dataWithBase64:message] encoding:NSUTF8StringEncoding] autorelease];
 							if ([message isEqualToString:@"Username:"]) {
-								[self _writeLine:[[self.client.username dataUsingEncoding:NSUTF8StringEncoding] base64]];
+								[self writeLine:[[self.client.username dataUsingEncoding:NSUTF8StringEncoding] base64]];
 								return;
 							} else if ([message isEqualToString:@"Password:"]) {
-								[self _writeLine:[[self.client.password dataUsingEncoding:NSUTF8StringEncoding] base64]];
+								[self writeLine:[[self.client.password dataUsingEncoding:NSUTF8StringEncoding] base64]];
 								return;
 							}
 						case 235:
@@ -604,7 +619,7 @@ enum SMTPSubstatuses {
 						case 334: {
 							message = [[[NSString alloc] initWithData:[NSData dataWithBase64:message] encoding:NSUTF8StringEncoding] autorelease];
 							NSString* temp = [NSString stringWithFormat:@"%@ %@", self.client.username, [[self class] CramMD5:message key:self.client.password]];
-							[self _writeLine:[[temp dataUsingEncoding:NSUTF8StringEncoding] base64]];
+							[self writeLine:[[temp dataUsingEncoding:NSUTF8StringEncoding] base64]];
 							return;
 						} break;
 						case 235:
@@ -621,10 +636,10 @@ enum SMTPSubstatuses {
 						NSString* to = [ito objectAtIndex:0];
 						if ([to rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]].location == NSNotFound)
 							to = [NSString stringWithFormat:@"<%@>", to];
-						[self _writeLine:[@"RCPT TO: " stringByAppendingString:to]];
+						[self writeLine:[@"RCPT TO: " stringByAppendingString:to]];
 						self.rcptToCount += 1;
 					}
-					self.status = StatusRCPT;
+					self.smtpStatus = StatusRCPT;
 					return;
 			}
 		} break;
@@ -633,8 +648,8 @@ enum SMTPSubstatuses {
 				case 250: {
 					self.rcptToCount -= 1;
 					if (self.rcptToCount == 0) {
-						[self _writeLine:@"DATA"];
-						self.status = StatusDATA;
+						[self writeLine:@"DATA"];
+						self.smtpStatus = StatusDATA;
 					}
 					return;
 				}
@@ -644,15 +659,15 @@ enum SMTPSubstatuses {
 			switch (code) {
 				case 0: // disconnection
 				case 250:
-					[self _writeLine:@"QUIT"];
-					self.status = StatusQUIT;
+					[self writeLine:@"QUIT"];
+					self.smtpStatus = StatusQUIT;
 					if (code == 0)
-						[self reset];
+						self.connectionStatus = ConnectionStatusClosed;
 					return;
 				case 354:
 					if (self.fromDescription)
-						[self _writeLine:[NSString stringWithFormat:@"From: =?UTF-8?B?%@?= <%@>", [[self.fromDescription dataUsingEncoding:NSUTF8StringEncoding] base64], self.from]];
-					else [self _writeLine:[NSString stringWithFormat:@"From: %@", self.from]];
+						[self writeLine:[NSString stringWithFormat:@"From: =?UTF-8?B?%@?= <%@>", [[self.fromDescription dataUsingEncoding:NSUTF8StringEncoding] base64], self.from]];
+					else [self writeLine:[NSString stringWithFormat:@"From: %@", self.from]];
 					
 					NSMutableString* to = [NSMutableString string];
 					for (NSArray* ito in self.to) {
@@ -662,19 +677,19 @@ enum SMTPSubstatuses {
 							[to appendFormat:@"=?UTF-8?B?%@?= <%@>", [[[ito objectAtIndex:1] dataUsingEncoding:NSUTF8StringEncoding] base64], [ito objectAtIndex:0]];
 						else [to appendFormat:@"%@", [ito objectAtIndex:0]];
 					}
-					[self _writeLine:[NSString stringWithFormat:@"To: %@", to]];
+					[self writeLine:[NSString stringWithFormat:@"To: %@", to]];
 					
-					[self _writeLine:[NSString stringWithFormat:@"Subject: =?UTF-8?B?%@?=", [[self.subject dataUsingEncoding:NSUTF8StringEncoding] base64]]];
-					[self _writeLine:@"Mime-Version: 1.0"];
-					[self _writeLine:@"Content-Type: text/html; charset=\"UTF-7\""];
-					[self _writeLine:@"Content-Transfer-Encoding: 7bit"];
+					[self writeLine:[NSString stringWithFormat:@"Subject: =?UTF-8?B?%@?=", [[self.subject dataUsingEncoding:NSUTF8StringEncoding] base64]]];
+					[self writeLine:@"Mime-Version: 1.0"];
+					[self writeLine:@"Content-Type: text/html; charset=\"UTF-7\""];
+					[self writeLine:@"Content-Transfer-Encoding: 7bit"];
 					
-					[self _writeLine:@""];
+					[self writeLine:@""];
 					
 					NSString* message = [self.message stringByReplacingOccurrencesOfString:@"\r\n." withString:@"\r\n.."];
-					[self _writeLine:[message UTF7Data]];
+					[self writeLine:[message UTF7Data]];
 					
-					[self _writeLine:@"."];
+					[self writeLine:@"."];
                     
 					return;
 			}
@@ -688,11 +703,11 @@ enum SMTPSubstatuses {
 		} break;
 	}
 	
-	[NSException raise:NSGenericException format:@"Don't know how to act with status %d, code %d", self.status, code];
+	[NSException raise:NSGenericException format:@"Don't know how to act with status %d, code %d", self.smtpStatus, code];
 }
 
 -(void)handleLine:(NSString*)line {
-    //	NSLog(@"-> %@", line);
+    NSLog(@"<- %@", line);
 	
 	NSInteger code = 0;
 	NSString* message = nil;
@@ -705,49 +720,6 @@ enum SMTPSubstatuses {
 	if (code) {
 		[self handleCode:code withMessage:message separator:separator];
 	} else [NSException raise:NSGenericException format:@"Couldn't parse line"];
-}
-
--(void)handleData {
-	if (self.dataTimeoutTimer) {
-		[self.dataTimeoutTimer invalidate];
-		self.dataTimeoutTimer = nil;
-	}
-	
-	char* datap = (char*)_ibuffer.bytes;
-	NSInteger datal = _ibuffer.length, datalused = 0;
-	
-	while (datal > 0) {
-		char* p = strnstr(datap, "\r\n", datal);
-		if (!p) break;
-		size_t l = p-datap;
-		
-		if (l) {
-			NSString* line = [[NSString alloc] initWithBytesNoCopy:datap length:l encoding:NSUTF8StringEncoding freeWhenDone:NO];
-			
-			[self handleLine:line];
-			
-			[line release];
-		}
-		
-		l += 2;
-		datap += l;
-		datal -= l;
-		datalused += l;
-	}
-    
-    if (datalused)
-        [_ibuffer replaceBytesInRange:NSMakeRange(0, datalused) withBytes:nil length:0];
-}
-
--(void)startTLS {
-    _isTLS = YES;
-    NSMutableDictionary* settings = [NSMutableDictionary dictionary];
-    [settings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString*)kCFStreamSSLLevel];
-    [settings setObject:self.client.address forKey:(NSString*)kCFStreamSSLPeerName];
-    [_istream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
-    [_ostream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
-    [_istream open];
-    [_ostream open];
 }
 
 -(void)_dataTimeoutCallback:(NSTimer*)timer {
