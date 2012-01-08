@@ -20,9 +20,12 @@
 	IBOutlet NSTextField* _subjectField;
 	IBOutlet NSTextField* _messageField;
 	IBOutlet NSTextField* _statusField;
+    NSThread* _testThread;
 }
 
 -(void)setStatus:(NSString*)str;
+
+-(IBAction)setPassword:(id)sender;
 
 -(IBAction)sendAction:(id)sender;
 
