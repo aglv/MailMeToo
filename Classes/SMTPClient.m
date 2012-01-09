@@ -297,7 +297,7 @@ enum {
 }
 
 -(void)startTLS {
-    NSLog(@"StartTLS with %@", self.client.address);
+//  NSLog(@"StartTLS with %@", self.client.address);
     NSMutableDictionary* settings = [NSMutableDictionary dictionary];
     self.connectionStatus = ConnectionStatusConnecting;
     [settings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString*)kCFStreamSSLLevel];
@@ -315,8 +315,8 @@ enum {
 
 -(void)stream:(NSStream*)stream handleEvent:(NSStreamEvent)event {
 	//#ifdef DEBUG
-    	NSString* NSEventName[] = {@"NSStreamEventNone", @"NSStreamEventOpenCompleted", @"NSStreamEventHasBytesAvailable", @"NSStreamEventHasSpaceAvailable", @"NSStreamEventErrorOccurred", @"NSStreamEventEndEncountered"};
-    	NSLog(@"%@ stream:handleEvent:%@", NSEventName[(int)log2(event)+1], [stream className]);
+//    	NSString* NSEventName[] = {@"NSStreamEventNone", @"NSStreamEventOpenCompleted", @"NSStreamEventHasBytesAvailable", @"NSStreamEventHasSpaceAvailable", @"NSStreamEventErrorOccurred", @"NSStreamEventEndEncountered"};
+//    	NSLog(@"%@ stream:handleEvent:%@", NSEventName[(int)log2(event)+1], [stream className]);
 	//#endif
 	
 	if (event == NSStreamEventOpenCompleted)
