@@ -51,8 +51,10 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 	NSInteger _smtpSubstatus;
 	NSArray* _authModes;
 	NSTimer* _dataTimeoutTimer;
+    NSTimer* _openTimeoutTimer;
 	NSInteger _rcptToCount;
 	BOOL _canStartTLS;
+    BOOL _success;
 }
 
 @property(retain) SMTPClient* client;
@@ -126,7 +128,7 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 }
 
 -(void)dealloc {
-    NSLog(@"SMTPClient dealloc");
+//  NSLog(@"SMTPClient dealloc");
 	self.address = nil;
 	self.ports = nil;
 	self.username = nil;
@@ -206,16 +208,17 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 @property BOOL canStartTLS;
 @property NSInteger rcptToCount;
 @property(retain) NSTimer* dataTimeoutTimer;
+@property(retain) NSTimer* openTimeoutTimer;
 
 +(NSString*)CramMD5:(NSString*)challengeString key:(NSString*)secretString;
 
 -(void)handleData:(NSMutableData*)data;
--(void)trySendingDataNow;
+-(void)handleLine:(NSString*)line;
 -(void)writeData:(NSData*)data;
+-(void)trySendingDataNow;
 
 -(void)startTLS;
-
--(void)handleLine:(NSString*)line;
+-(void)reset;
 
 @end
 
@@ -238,6 +241,7 @@ NSString* const SMTPMessageKey = @"SMTPMessage";
 @synthesize canStartTLS = _canStartTLS;
 @synthesize rcptToCount = _rcptToCount;
 @synthesize dataTimeoutTimer = _dataTimeoutTimer;
+@synthesize openTimeoutTimer = _openTimeoutTimer;
 
 enum {
     ConnectionStatusClosed = 0, ConnectionStatusConnecting, ConnectionStatusOk
@@ -256,8 +260,9 @@ enum {
     NSException* exception = nil;
 	for (NSNumber* port in self.client.ports) {
 		@try {
-            self.connectionStatus = ConnectionStatusConnecting;
+            [self reset];
             
+            self.connectionStatus = ConnectionStatusConnecting;
             [NSStream getStreamsToHost:[NSHost hostWithName:self.client.address] port:port.integerValue inputStream:&_istream outputStream:&_ostream];
             [_istream retain];
             [_ostream retain];
@@ -265,16 +270,22 @@ enum {
             [_ostream setDelegate:self];
             [_istream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
             [_ostream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
+            self.openTimeoutTimer = [[[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:10] interval:0 target:self selector:@selector(_openTimeoutCallback:) userInfo:nil repeats:NO] autorelease];
+            [[NSRunLoop currentRunLoop] addTimer:self.openTimeoutTimer forMode:NSDefaultRunLoopMode];
+
             [_istream open];
             [_ostream open];
             
             while (self.connectionStatus != ConnectionStatusClosed/* && !_launchThread.isCancelled*/) {
                 [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-                //            [NSThread sleepForTimeInterval:0.01];
+                // [NSThread sleepForTimeInterval:0.01];
             }
 			
-            exception = nil;
-			break;
+            if (!_istream.streamError && !_ostream.streamError && _success) {
+                exception = nil;
+                break;
+            }
 		} @catch (NSException* e) {
 			NSLog(@"SMTP Exception: %@", e.reason);
             exception = e;
@@ -283,6 +294,23 @@ enum {
     
     if (exception)
 		@throw exception;
+}
+
+-(void)startTLS {
+    NSLog(@"StartTLS with %@", self.client.address);
+    NSMutableDictionary* settings = [NSMutableDictionary dictionary];
+    self.connectionStatus = ConnectionStatusConnecting;
+    [settings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString*)kCFStreamSSLLevel];
+    [settings setObject:self.client.address forKey:(NSString*)kCFStreamSSLPeerName];
+    [_istream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
+    [_ostream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
+    [_istream open];
+    [_ostream open];
+    _isTLS = YES;
+}
+
+-(void)_openTimeoutCallback:(NSTimer*)timer {
+    [self reset];
 }
 
 -(void)stream:(NSStream*)stream handleEvent:(NSStreamEvent)event {
@@ -389,27 +417,9 @@ enum {
 }
 
 -(void)dealloc {
-    NSLog(@"_SMTPConnector dealloc");
+//  NSLog(@"_SMTPConnector dealloc");
     
-    [self.ostream close];
-    [self.istream close];
-    [self.ostream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [self.istream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    self.ostream = nil;
-    self.istream = nil;
-    
-//    _handleOpenCompleted = 0;
-//	[_ibuffer setLength:0];
-//	[_obuffer setLength:0];
-//    _connectionStatus = ConnectionStatusClosed;
-//    _isTLS = NO;
-//	self.status = InitialStatus;
-	self.authModes = nil;
-//	self.canStartTLS = NO;
-//	self.rcptToCount = 0;
-    
-	[self.dataTimeoutTimer invalidate];
-	self.dataTimeoutTimer = nil;
+    [self reset];
     
     self.client = nil;
 	self.message = nil;
@@ -423,20 +433,51 @@ enum {
 	[super dealloc];
 }
 
--(void)startTLS {
-    NSLog(@"StartTLS with %@", self.client.address);
-    NSMutableDictionary* settings = [NSMutableDictionary dictionary];
-    self.connectionStatus = ConnectionStatusConnecting;
-    [settings setObject:NSStreamSocketSecurityLevelNegotiatedSSL forKey:(NSString*)kCFStreamSSLLevel];
-    [settings setObject:self.client.address forKey:(NSString*)kCFStreamSSLPeerName];
-    [_istream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
-    [_ostream setProperty:settings forKey:(NSString*)kCFStreamPropertySSLSettings];
-    [_istream open];
-    [_ostream open];
-    _isTLS = YES;
-}
-
 #pragma mark SMTP
+
+enum SMTPStatuses {
+	InitialStatus = 0,
+	StatusHELO,
+	StatusEHLO,
+	StatusSTARTTLS,
+	StatusAUTH,
+	StatusMAIL,
+	StatusRCPT,
+	StatusDATA,
+	StatusQUIT
+};
+
+enum SMTPSubstatuses {
+	PlainAUTH = 1,
+	LoginAUTH,
+	CramMD5AUTH
+};
+
+-(void)reset {
+    [self.openTimeoutTimer invalidate];
+	self.openTimeoutTimer = nil;
+    
+    [self.dataTimeoutTimer invalidate];
+	self.dataTimeoutTimer = nil;
+    
+    [self.ostream close];
+    [self.istream close];
+    [self.ostream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.istream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    self.ostream = nil;
+    self.istream = nil;
+    
+    _handleOpenCompleted = 0;
+    self.connectionStatus = ConnectionStatusClosed;
+    [_ibuffer setLength:0];
+    [_obuffer setLength:0];
+    _isTLS = NO;
+    
+    self.smtpStatus = InitialStatus;
+    self.authModes = nil;
+    self.canStartTLS = NO;
+    self.rcptToCount = 0;
+}
 
 +(NSString*)CramMD5:(NSString*)challengeString key:(NSString*)secretString {
 	unsigned char ipad[64], opad[64];
@@ -469,26 +510,8 @@ enum {
     return string;
 }
 
-enum SMTPStatuses {
-	InitialStatus = 0,
-	StatusHELO,
-	StatusEHLO,
-	StatusSTARTTLS,
-	StatusAUTH,
-	StatusMAIL,
-	StatusRCPT,
-	StatusDATA,
-	StatusQUIT
-};
-
-enum SMTPSubstatuses {
-	PlainAUTH = 1,
-	LoginAUTH,
-	CramMD5AUTH
-};
-
 -(void)writeLine:(id)line {
-    NSLog(@"-> %@", line);
+//  NSLog(@"-> %@", line);
     if ([line isKindOfClass:[NSString class]])
         line = [line dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -659,10 +682,11 @@ enum SMTPSubstatuses {
 			switch (code) {
 				case 0: // disconnection
 				case 250:
+                    _success = YES;
 					[self writeLine:@"QUIT"];
 					self.smtpStatus = StatusQUIT;
 					if (code == 0)
-						self.connectionStatus = ConnectionStatusClosed;
+						[self reset];
 					return;
 				case 354:
 					if (self.fromDescription)
@@ -707,7 +731,7 @@ enum SMTPSubstatuses {
 }
 
 -(void)handleLine:(NSString*)line {
-    NSLog(@"<- %@", line);
+//  NSLog(@"<- %@", line);
 	
 	NSInteger code = 0;
 	NSString* message = nil;
