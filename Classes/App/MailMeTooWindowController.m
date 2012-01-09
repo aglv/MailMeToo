@@ -53,7 +53,10 @@ static NSString* MailMeTooWindowControllerTestPasswordContext = @"MailMeTooWindo
 }
 
 -(IBAction)setPassword:(id)sender {
-    
+    [MailApp SmtpAccount:[NSDictionary dictionaryWithObjectsAndKeys: 
+                          [_addressField stringValue], SMTPServerAddressKey,
+                          [_usernameField stringValue], SMTPServerAuthUsernameKey, NULL]
+             setPassword:[_passwordField stringValue]];
 }
 
 -(IBAction)sendAction:(id)sender {

@@ -12,5 +12,6 @@
 
 +(NSDictionary*)SmtpAccounts;
 +(NSString*)SmtpPasswordForAccount:(NSDictionary*)account;
++(void)SmtpAccount:(NSDictionary*)account setPassword:(NSString*)password;
 
 @end

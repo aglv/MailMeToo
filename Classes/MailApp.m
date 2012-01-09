@@ -136,4 +136,36 @@
     return nil;
 }
 
++(void)SetInternetPassword:(NSString*)password forKeychainItemName:(NSString*)name account:(NSString*)account {
+    SecKeychainAttribute attributes[3];
+	
+    attributes[0].tag = kSecAccountItemAttr;
+    attributes[0].data = (void*)[account UTF8String];
+    attributes[0].length = [account length];
+	
+	attributes[1].tag = kSecLabelItemAttr;
+    attributes[1].data = (void*)[name UTF8String];
+    attributes[1].length = [name length];
+    
+    SecKeychainAttributeList list;
+    list.count = 2;
+    list.attr = attributes;
+    
+    SecKeychainItemRef item;
+    OSStatus status = SecKeychainItemCreateFromContent(kSecInternetPasswordItemClass, &list, password.length, password.UTF8String, NULL, NULL, &item);
+    if (status != 0) {
+        NSLog(@"Error creating new item: %d", (int)status);
+    }
+}
+
++(void)SmtpAccount:(NSDictionary*)account setPassword:(NSString*)password {
+    NSString* hostname = [account objectForKey:SMTPServerAddressKey];
+    NSString* username = [account objectForKey:SMTPServerAuthUsernameKey];
+    
+    if (!hostname.length || !username.length || !password.length)
+        return;
+
+    [self SetInternetPassword:password forKeychainItemName:hostname account:username];
+}
+
 @end
