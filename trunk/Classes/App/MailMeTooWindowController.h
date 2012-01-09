@@ -20,7 +20,6 @@
 	IBOutlet NSTextField* _subjectField;
 	IBOutlet NSTextField* _messageField;
 	IBOutlet NSTextField* _statusField;
-    NSThread* _testThread;
 }
 
 -(void)setStatus:(NSString*)str;

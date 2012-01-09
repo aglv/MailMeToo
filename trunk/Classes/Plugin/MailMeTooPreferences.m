@@ -8,6 +8,7 @@
 #import "MailMeTooPreferences.h"
 #import "GrowlDefinesInternal.h"
 #import "SMTPClient.h"
+#import "MailApp.h"
 
 #define REMOVE_GROWL_PREF_VALUE(key, domain) do {\
 	CFDictionaryRef staticPrefs = (CFDictionaryRef)CFPreferencesCopyAppValue((CFStringRef)domain, \
@@ -36,6 +37,73 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.mai
 
 -(void)didSelect {
 	SYNCHRONIZE_GROWL_PREFS();
+}
+
+#pragma mark NSMenuDelegate
+
+-(void)menuWillOpen:(NSMenu*)menu {
+    [menu removeAllItems];
+    NSDictionary* accounts = [MailApp SmtpAccounts];
+    //    NSLog(@"Accounts: %@", accounts);
+    for (NSString* name in accounts) {
+        NSDictionary* account = [accounts objectForKey:name];
+        NSMenuItem* mi = [[[NSMenuItem alloc] initWithTitle:name action:@selector(selectMailAppAccount:) keyEquivalent:@""] autorelease];
+        mi.target = self;
+        mi.representedObject = account;
+        [menu addItem:mi];
+    }
+}
+
+-(void)selectMailAppAccount:(NSMenuItem*)mi {
+    NSDictionary* account = mi.representedObject;
+    id temp;
+//  NSLog(@"Account: %@", account);
+    
+    temp = [account objectForKey:SMTPServerAddressKey];
+    [_addressField setStringValue:temp];
+    [self setServerAddress:temp];
+    
+    NSArray* ports = [account objectForKey:SMTPServerPortsKey];
+    if (ports.count)
+        temp = [ports componentsJoinedByString:@","];
+    else temp = @"";
+    [_portsField setStringValue:temp];
+    [self setServerPorts:temp];
+    
+    temp = [account objectForKey:SMTPServerTLSModeKey];
+    [_tlsMatrix selectCellWithTag:[temp integerValue]];
+    [self setServerTlsMode:[temp integerValue]];
+    
+    BOOL authFlag = [[account objectForKey:SMTPServerAuthFlagKey] boolValue];
+    [_authCheckbox setIntegerValue:authFlag];
+    [self setServerAuthFlag:authFlag];
+    if (authFlag) {
+        NSString* username = [account objectForKey:SMTPServerAuthUsernameKey];
+        [_usernameField setStringValue:username];
+        [self setServerAuthUsername:username];
+        
+        if ([username rangeOfString:@"@"].length) {
+            @try {
+                NSString* desc;
+                [SMTPClient splitAddress:_fromField.stringValue intoEmail:NULL description:&desc];
+                desc = desc.length? [NSString stringWithFormat:@"%@ <%@>", desc, username] : username;
+                [_fromField setStringValue:desc];
+                [self setMessageFrom:desc];
+            } @catch (...) {
+                [_fromField setStringValue:username];
+                [self setMessageFrom:username];
+            }
+        }
+        
+        NSString* password = [MailApp SmtpPasswordForAccount:account];
+        [_passwordField setStringValue:(password? password : @"")];
+        [self setServerAuthPassword:(password? password : @"")];
+    } else {
+        [_usernameField setStringValue:@""];
+        [self setServerAuthUsername:@""];
+        [_passwordField setStringValue:@""];
+        [self setServerAuthPassword:@""];
+    }
 }
 
 #pragma mark Accessors
@@ -102,14 +170,15 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.mai
 }
 
 -(NSString*)serverAuthPassword {
-	NSString* value = nil;
-	READ_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, DefaultsDomain, CFStringRef, (CFStringRef*)&value);
-	return value;
+    return [MailApp SmtpPasswordForAccount:[NSDictionary dictionaryWithObjectsAndKeys: 
+                                            [_addressField stringValue], SMTPServerAddressKey,
+                                            [_usernameField stringValue], SMTPServerAuthUsernameKey, NULL]];
 }
 -(void)setServerAuthPassword:(NSString*)value {
-	if (value.length) WRITE_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, value, DefaultsDomain);
-	else REMOVE_GROWL_PREF_VALUE(SMTPServerAuthPasswordKey, DefaultsDomain);
-	UPDATE_GROWL_PREFS();
+    [MailApp SmtpAccount:[NSDictionary dictionaryWithObjectsAndKeys: 
+                          [_addressField stringValue], SMTPServerAddressKey,
+                          [_usernameField stringValue], SMTPServerAuthUsernameKey, NULL]
+             setPassword:[_passwordField stringValue]];
 }
 
 -(NSString*)messageFrom {
