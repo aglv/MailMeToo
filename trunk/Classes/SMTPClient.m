@@ -321,7 +321,11 @@ enum {
 	
 	if (event == NSStreamEventOpenCompleted)
 		if (++_handleOpenCompleted == 2) {
+            [self.openTimeoutTimer invalidate];
+            self.openTimeoutTimer = nil;
+            
 			self.connectionStatus = ConnectionStatusOk;
+            
             self.dataTimeoutTimer = [[[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:0 target:self selector:@selector(_dataTimeoutCallback:) userInfo:nil repeats:NO] autorelease];
             [[NSRunLoop currentRunLoop] addTimer:self.dataTimeoutTimer forMode:NSDefaultRunLoopMode];
 		}
