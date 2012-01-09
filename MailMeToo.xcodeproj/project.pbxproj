@@ -443,13 +443,13 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "SMTPClientGrowlPlugin-Info.plist";
+				INFOPLIST_FILE = "MailMeTooPlugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Application Support/Growl/Plugins";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
 				);
-				PRODUCT_NAME = SMTPMail;
+				PRODUCT_NAME = MailMeToo;
 				WRAPPER_EXTENSION = growlView;
 				ZERO_LINK = NO;
 			};

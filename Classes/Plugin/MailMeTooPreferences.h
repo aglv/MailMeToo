@@ -8,6 +8,15 @@
 #import <PreferencePanes/PreferencePanes.h>
 
 @interface MailMeTooPreferences : NSPreferencePane {
+	IBOutlet NSTextField* _addressField;
+	IBOutlet NSTextField* _portsField;
+	IBOutlet NSMatrix* _tlsMatrix;
+	IBOutlet NSTextField* _fromField;
+	IBOutlet NSButton* _authCheckbox;
+	IBOutlet NSTextField* _usernameField;
+	IBOutlet NSTextField* _passwordField;
+	IBOutlet NSTextField* _toField;
+	IBOutlet NSTextField* _subjectPrefixField;
 }
 
 @property(retain) NSString* serverAddress;
