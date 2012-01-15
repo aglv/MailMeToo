@@ -18,7 +18,7 @@ _MailMeToo_ supports the following:
 
 = Compatibility =
 
-_MailMeToo_ has been successfully tested with Growl versions 1.2 and 1.3. It is only compatible with Mac OS X 10.6 _Snow Leopard_ and 10.7 _Lion_.
+_MailMeToo_ has been successfully tested with Growl versions 1.2.2 and 1.3.2. It is only compatible with Mac OS X 10.6 _Snow Leopard_ and 10.7 _Lion_.
 
 = Testing =
 
