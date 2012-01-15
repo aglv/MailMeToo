@@ -16,6 +16,10 @@ _MailMeToo_ supports the following:
     * Import SMTP accounts already configured in Mail.app
     * Passwords are safely stored in the OSX Keychain
 
+= Compatibility =
+
+_MailMeToo_ has been successfully tested with Growl versions 1.2 and 1.3. It is only compatible with Mac OS X 10.6 _Snow Leopard_ and 10.7 _Lion_.
+
 = Testing =
 
 After filling the required fields, hit the _Preview_ button on bottom of the preferences pane. An email should be sent to the specified recipient. If something goes wrong, something should be logged. You can access the logs through _Console.app_, in your _Utilities_ folder.
