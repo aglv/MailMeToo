@@ -39,6 +39,10 @@ static const NSString* const DefaultsDomain = @"ch.alessandrovolz.growl.view.mai
 	SYNCHRONIZE_GROWL_PREFS();
 }
 
+-(BOOL)mailAppHasAccounts {
+    return [[MailApp SmtpAccounts] count] > 0;
+}
+
 #pragma mark NSMenuDelegate
 
 -(void)menuWillOpen:(NSMenu*)menu {
