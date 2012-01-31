@@ -6,7 +6,6 @@
 //
 
 #import "SMTPClient.h"
-#import <iconv.h>
 #include <CommonCrypto/CommonDigest.h>
 
 NSString* const SMTPServerAddressKey = @"SMTPServerAddress";
