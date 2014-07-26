@@ -1,6 +1,12 @@
 = Introduction =
 
-Much like the _MailMe_ plugin, _MailMeToo_ delivers notifications by sending an email for every notification it is set to process. 
+_MailMeToo_ was developed in 2011, when the _MailMe_ notification style in _Growl_ sent notifications as emails in a rather unsatisfactory way. Since then, _The Growl Project_'s developers decided to replace the original _MailMe_ style with our version, so by using _Growl 2.0_ or newer you're already using this plugin.
+
+Consequently, I decided to only distribute the plugin's version for _Growl 1.2.2_, which is the latest to support Mac OS X 10.6. All other system versions are covered by _Growl 2.0_ and later versions.
+
+----
+
+Like the _MailMe_ plugin, _MailMeToo_ delivers notifications by sending an email for every notification it is set to process. 
 
 The _MailMeToo_ plugin was created to give the user more control on how the emails are sent: in _MailMe_ the user can only configure the destination email address, then _Mail.app_ is used to route the email to its destination. In _MailMeToo_ users are allowed to provide an SMTP account's information like in any email client. Emails are sent through the specified server using the specified account information.
 
@@ -18,7 +24,7 @@ _MailMeToo_ supports the following:
 
 = Compatibility =
 
-_MailMeToo_ has been successfully tested with Growl versions 1.2.2 and 1.3.2. It is only compatible with Mac OS X 10.6 _Snow Leopard_ and 10.7 _Lion_.
+_MailMeToo_ has been successfully tested with Growl version 1.2.2. It is only supposed to be used with Mac OS X 10.6 _Snow Leopard_ as Growl 2.0 includes _MailMeToo_ (as _MailMe_) and doesn't need the plugin, covering Mac OS X 10.7 and later.
 
 = Testing =
 
