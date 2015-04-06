@@ -565,7 +565,7 @@ enum SMTPSubstatuses {
     //	NSLog(@"HANDLE: [Status %d] Handling %d with %@", context.status, code, message);
 	
 	if (code >= 500)
-		[NSException raise:NSGenericException format:@"Error %d: %@", code, message];
+		[NSException raise:NSGenericException format:@"Error %ld: %@", (long)code, message];
 	
 	switch (self.smtpStatus) {
 		case InitialStatus: {
@@ -728,7 +728,7 @@ enum SMTPSubstatuses {
 		} break;
 	}
 	
-	[NSException raise:NSGenericException format:@"Don't know how to act with status %d, code %d", self.smtpStatus, code];
+	[NSException raise:NSGenericException format:@"Don't know how to act with status %ld, code %ld", (long)self.smtpStatus, (long)code];
 }
 
 -(void)handleLine:(NSString*)line {
@@ -795,7 +795,7 @@ enum SMTPSubstatuses {
 	NSMutableString* stringBuffer = [NSMutableString stringWithCapacity:([self length] * 2)];
 	const unsigned char* dataBuffer = (unsigned char*)[self bytes];
 	for (int i = 0; i < [self length]; ++i)
-		[stringBuffer appendFormat:@"%02X", (unsigned long)dataBuffer[i]];
+		[stringBuffer appendFormat:@"%02lX", (unsigned long)dataBuffer[i]];
 	return [[stringBuffer copy] autorelease];
 }
 

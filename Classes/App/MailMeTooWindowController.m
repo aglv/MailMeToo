@@ -11,7 +11,7 @@
 
 @implementation MailMeTooWindowController
 
-static NSString* MailMeTooWindowControllerTestPasswordContext = @"MailMeTooWindowControllerTestPasswordContext";
+//static NSString* MailMeTooWindowControllerTestPasswordContext = @"MailMeTooWindowControllerTestPasswordContext";
 
 -(id)init {
 	if ((self = [super initWithWindowNibName:@"EmailWindow" owner:self])) {
