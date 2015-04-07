@@ -32,7 +32,6 @@
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Resources/App/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/App/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* MailMeTooAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MailMeTooAppDelegate.h; path = Classes/App/MailMeTooAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* MailMeTooAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MailMeTooAppDelegate.m; path = Classes/App/MailMeTooAppDelegate.m; sourceTree = "<group>"; };
@@ -116,7 +115,6 @@
 			children = (
 				71B1F9B814B2300900579EDC /* Security.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
-				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
