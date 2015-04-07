@@ -1,2 +1,0 @@
-- SMTP account passwords are currently stored in cleartext, in the preferences plist. Move them to the account keychain.
-- Import Mail.app accounts.
