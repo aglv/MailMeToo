@@ -1,0 +1,3 @@
+[submodule "wiki"]
+	path = wiki
+	url = gitgit@github.com:aglv/Growl-MailMeToo.wiki.git
